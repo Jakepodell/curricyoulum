@@ -1,11 +1,28 @@
-#input-container li{
+#input-container #input {
     list-style-type: none;
-    display: inline-block;
-    margin: 5px;
-    background-color: aqua;
+    background-color: #a6192e;
     padding: 5px;
+    width:75%;
+    margin: 10px auto;
+    color: white;
+}
+
+#input-container select {
+    color: black;
+}
+
+#input-container input {
+    color: black;
 }
 
 #input-container {
     display: block;
+    margin: 100px auto;
+    width:75%;
+    background-color: rgba(0,0,0,.75);
+    padding:20px;
+}
+
+body {
+    background-image: url("img/cornell_background_offset.jpg");
 }

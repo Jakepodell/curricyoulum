@@ -24,7 +24,7 @@ class Input extends React.Component {
                     <br/>
                     <input
                         type="text"
-                        placeholder={this.props.field}
+                        placeholder= {"e.g. "+this.props.example}
                         onChange={this.handleChange}
                     />
                 </form>
@@ -46,16 +46,30 @@ class InputForm extends React.Component {
     render() {
         return (
             <div>
-                <h1>CurricYOUlum!</h1>
-                <ul id = "input-container">
-                    {this.props.fields.map(function(field) {
-                        return (
-                            <li key = {field}>
-                                <Input field = {field}/>
-                            </li>
-                        );
-                    })}
-                </ul>
+                <div id = "input-container">
+                    <div id = "input">
+                        <select>
+                            <option value="Engineering">Engineering</option>
+                            <option value="AEM">AEM</option>
+                            <option value="Hotel">Hotel</option>
+                        </select>
+                    </div>
+                    <div id = "input">
+                        <Input field = "Major" example = "Computer Science"/>
+                    </div>
+                    <div id = "input">
+                        <Input field = "Minor(s)" example = "Cognitive Science"/>
+                    </div>
+                    <div id = "input">
+                        <Input field = "Classes Taken" example = "AEM 2940"/>
+                    </div>
+                    <div id = "input">
+                        <Input field = "Graduating Semester" example = "Spring 2019"/>
+                    </div>
+                    <div id = "input">
+                        <Input field = "Desired Classes" example = "CS 4700"/>
+                    </div>
+                </div>
             </div>
         );
     }
