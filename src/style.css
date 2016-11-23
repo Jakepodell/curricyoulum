@@ -1,0 +1,11 @@
+#input-container li{
+    list-style-type: none;
+    display: inline-block;
+    margin: 5px;
+    background-color: aqua;
+    padding: 5px;
+}
+
+#input-container {
+    display: block;
+}
