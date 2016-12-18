@@ -33,46 +33,4 @@ class Input extends React.Component {
     }
 }
 
-//----------------------INPUT FORM---------------------------------------
-
-/**
- * A list of inputs, created from elements of the fields prop
- */
-class InputForm extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <div>
-                <div id = "input-container">
-                    <div id = "input">
-                        <select>
-                            <option value="Engineering">Engineering</option>
-                            <option value="AEM">AEM</option>
-                            <option value="Hotel">Hotel</option>
-                        </select>
-                    </div>
-                    <div id = "input">
-                        <Input field = "Major" example = "Computer Science"/>
-                    </div>
-                    <div id = "input">
-                        <Input field = "Minor(s)" example = "Cognitive Science"/>
-                    </div>
-                    <div id = "input">
-                        <Input field = "Classes Taken" example = "AEM 2940"/>
-                    </div>
-                    <div id = "input">
-                        <Input field = "Graduating Semester" example = "Spring 2019"/>
-                    </div>
-                    <div id = "input">
-                        <Input field = "Desired Classes" example = "CS 4700"/>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-}
-
-export default InputForm;
+export default Input;

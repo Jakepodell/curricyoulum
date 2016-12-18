@@ -1,8 +1,11 @@
+body {
+    background-image: url("img/cornell_background_offset.jpg");
+}
+
 #input-container #input {
     list-style-type: none;
     background-color: #a6192e;
     padding: 5px;
-    width:75%;
     margin: 10px auto;
     color: white;
 }
@@ -23,6 +26,24 @@
     padding:20px;
 }
 
-body {
-    background-image: url("img/cornell_background_offset.jpg");
+label > input{ /* HIDE RADIO */
+    visibility: hidden; /* Makes input not-clickable */
+    position: absolute; /* Remove input from document flow */
+}
+label > input + img{ /* IMAGE STYLES */
+    cursor:pointer;
+    border:2px solid transparent;
+}
+label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
+    border:2px solid #f00;
+}
+
+#radio-container img {
+    width: 75px;
+    height: 75px;
+    margin: 15px;
+}
+
+#radio-container {
+    text-align: center;
 }

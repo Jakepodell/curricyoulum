@@ -1,11 +1,11 @@
 import React from 'react';
 import {render} from 'react-dom';
-import InputForm from './input.jsx'
+import Form from './form.jsx'
 
 class App extends React.Component {
     render () {
         return (
-            <InputForm />
+            <Form />
         );
     }
 }
