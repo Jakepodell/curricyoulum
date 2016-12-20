@@ -1,13 +1,28 @@
-body {
-    background-image: url("img/cornell_background_offset.jpg");
+#banner_image {
+    width: 100%;
+    display: block;
+    height: 650px;
+    overflow: hidden;
+}
+
+#banner_image #inner_logo {
+    display: block;
+    width:50%;
+    position: absolute;
+    top: 250px;
+    width: 60%;
+    margin-left: 20%;
+}
+
+#banner_image #inner_logo img {
+    width: 100%;
 }
 
 #input-container #input {
     list-style-type: none;
-    background-color: #a6192e;
     padding: 5px;
     margin: 10px auto;
-    color: white;
+    color: #4b4b4b;
 }
 
 #input-container select {
@@ -21,8 +36,7 @@ body {
 #input-container {
     display: block;
     margin: 100px auto;
-    width:75%;
-    background-color: rgba(0,0,0,.75);
+    width:90%;
     padding:20px;
 }
 
@@ -39,11 +53,15 @@ label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
 }
 
 #radio-container img {
-    width: 75px;
-    height: 75px;
-    margin: 15px;
+    width: 100px;
+    height: 100px;
+    margin: 25px;
 }
 
 #radio-container {
     text-align: center;
+}
+
+#form_title {
+    font-size: 3em;
 }

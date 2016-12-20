@@ -26,7 +26,7 @@ class Form extends React.Component {
                         <RadioImage schools = {schools} name = "schools"/>
                     </div>
                     <div id = "input">
-                        <Input field = "Magfsjor" example = "Computer Science"/>
+                        <Input field = "Major" example = "Computer Science"/>
                     </div>
                     <div id = "input">
                         <Input field = "Minor(s)" example = "Cognitive Science"/>

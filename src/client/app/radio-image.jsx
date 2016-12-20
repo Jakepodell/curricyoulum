@@ -24,7 +24,7 @@ class RadioImage extends React.Component {
     render() {
         return (
             <div id = "radio-container">
-                <p>School:</p>
+                <p id = "form_title">School:</p>
                 {this.renderItems()}
             </div>
         );
