@@ -21,7 +21,7 @@ class Input extends React.Component {
     renderItems() {
         let inputValue = this.state.inputValue;
         return this.props.items.filter(function(item) {
-          return item.includes(inputValue);
+          return item.toLowerCase().includes(inputValue.toLowerCase()); //see if there is a better way to do this using a regex
         }).map(function(item) {
             return(
                 <tr id = "suggestion" key = {item} >

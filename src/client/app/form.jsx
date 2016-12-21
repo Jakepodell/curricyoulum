@@ -12,14 +12,20 @@ class Form extends React.Component {
     }
 
     render() {
-        var schools = [
+        let schools = [
             {title: "Engineering", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png"},
             {title: "Arts", img: "http://squad.se/wp-content/uploads/2016/08/Hard-Money-Icon-3.png"},
             {title: "Human Ecology", img: "http://www.morethanprinting.co/images/educationIcon.png"},
             {title: "Hotel", img: "http://www.hotel-r.net/im/hotel/gb/icon-hotel-18.png"},
             {title: "CALS", img: "http://www.cals.nl/wp-content/themes/calscollegelocatie/assets/img/logo.svg"}
         ];
-        var items = ["thing1", "thing2", "thing3"];
+
+        let majors = ["Computer Science", "Hotel Things", "Economics", "Accounting", "Applied and Engineering Physics", "Art History", "Basket Weaving"];
+        let minors = majors;
+        let classesTaken = ["AEM 2540", "CS 4780", "ECE 3210", "MATH 2930"];
+        let graduatingSemester = ["Spring 2017", "Fall 2017", "Spring 2018", "Fall 2018", "Spring 2019"]
+        let desiredClasses = classesTaken;
+
         return (
             <div>
                 <div id = "input-container">
@@ -27,19 +33,19 @@ class Form extends React.Component {
                         <RadioImage schools = {schools} name = "schools"/>
                     </div>
                     <div id = "input">
-                        <Input field = "Major" example = "Computer Science" items = {items} />
+                        <Input field = "Major" example = "Computer Science" items = {majors} />
                     </div>
                     <div id = "input">
-                        <Input field = "Minor(s)" example = "Cognitive Science" items = {items} />
+                        <Input field = "Minor(s)" example = "Cognitive Science" items = {minors} />
                     </div>
                     <div id = "input">
-                        <Input field = "Classes Taken" example = "AEM 2940" items = {items} />
+                        <Input field = "Classes Taken" example = "AEM 2940" items = {classesTaken} />
                     </div>
                     <div id = "input">
-                        <Input field = "Graduating Semester" example = "Spring 2019" items = {items} />
+                        <Input field = "Graduating Semester" example = "Spring 2019" items = {graduatingSemester} />
                     </div>
                     <div id = "input">
-                        <Input field = "Desired Classes" example = "CS 4700" items = {items} />
+                        <Input field = "Desired Classes" example = "CS 4700" items = {desiredClasses} />
                     </div>
                 </div>
             </div>

@@ -20320,7 +20320,13 @@
 	        key: 'render',
 	        value: function render() {
 	            var schools = [{ title: "Engineering", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png" }, { title: "Arts", img: "http://squad.se/wp-content/uploads/2016/08/Hard-Money-Icon-3.png" }, { title: "Human Ecology", img: "http://www.morethanprinting.co/images/educationIcon.png" }, { title: "Hotel", img: "http://www.hotel-r.net/im/hotel/gb/icon-hotel-18.png" }, { title: "CALS", img: "http://www.cals.nl/wp-content/themes/calscollegelocatie/assets/img/logo.svg" }];
-	            var items = ["thing1", "thing2", "thing3"];
+	
+	            var majors = ["Computer Science", "Hotel Things", "Economics", "Accounting", "Applied and Engineering Physics", "Art History", "Basket Weaving"];
+	            var minors = majors;
+	            var classesTaken = ["AEM 2540", "CS 4780", "ECE 3210", "MATH 2930"];
+	            var graduatingSemester = ["Spring 2017", "Fall 2017", "Spring 2018", "Fall 2018", "Spring 2019"];
+	            var desiredClasses = classesTaken;
+	
 	            return _react2.default.createElement(
 	                'div',
 	                null,
@@ -20335,27 +20341,27 @@
 	                    _react2.default.createElement(
 	                        'div',
 	                        { id: 'input' },
-	                        _react2.default.createElement(_input2.default, { field: 'Major', example: 'Computer Science', items: items })
+	                        _react2.default.createElement(_input2.default, { field: 'Major', example: 'Computer Science', items: majors })
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { id: 'input' },
-	                        _react2.default.createElement(_input2.default, { field: 'Minor(s)', example: 'Cognitive Science', items: items })
+	                        _react2.default.createElement(_input2.default, { field: 'Minor(s)', example: 'Cognitive Science', items: minors })
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { id: 'input' },
-	                        _react2.default.createElement(_input2.default, { field: 'Classes Taken', example: 'AEM 2940', items: items })
+	                        _react2.default.createElement(_input2.default, { field: 'Classes Taken', example: 'AEM 2940', items: classesTaken })
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { id: 'input' },
-	                        _react2.default.createElement(_input2.default, { field: 'Graduating Semester', example: 'Spring 2019', items: items })
+	                        _react2.default.createElement(_input2.default, { field: 'Graduating Semester', example: 'Spring 2019', items: graduatingSemester })
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { id: 'input' },
-	                        _react2.default.createElement(_input2.default, { field: 'Desired Classes', example: 'CS 4700', items: items })
+	                        _react2.default.createElement(_input2.default, { field: 'Desired Classes', example: 'CS 4700', items: desiredClasses })
 	                    )
 	                )
 	            );
@@ -20425,7 +20431,7 @@
 	        value: function renderItems() {
 	            var inputValue = this.state.inputValue;
 	            return this.props.items.filter(function (item) {
-	                return item.includes(inputValue);
+	                return item.toLowerCase().includes(inputValue.toLowerCase()); //see if there is a better way to do this using a regex
 	            }).map(function (item) {
 	                return _react2.default.createElement(
 	                    'tr',
