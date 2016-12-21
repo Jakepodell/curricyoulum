@@ -5,3 +5,4 @@ webpack.config.js
 *.xml
 package.json
 *.iml
+*.ai
