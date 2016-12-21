@@ -11,11 +11,16 @@ class Input extends React.Component {
         super(props);
         this.state = {showsSuggestions: false, inputValue: ""};
         this.handleChange = this.handleChange.bind(this);
+        this.handleSelectSuggestions = this.handleSelectSuggestions.bind(this);
     }
 
     handleChange(event) {
         this.setState({showsSuggestions: event.target.value.length > 0,
                         inputValue: event.target.value});
+    }
+
+    handleSelectSuggestions(value) {
+        this.setState({inputValue: value.target.innerHTML});
     }
 
     renderItems() {
@@ -25,12 +30,12 @@ class Input extends React.Component {
         }).map(function(item) {
             return(
                 <tr id = "suggestion" key = {item} >
-                    <td>
+                    <td onClick={this.handleSelectSuggestions} key="fdf">
                         {item}
                     </td>
                 </tr>
             );
-        });
+        }.bind(this));
     }
 
     render() {
@@ -43,6 +48,7 @@ class Input extends React.Component {
                         type="text"
                         id={this.props.field}
                         placeholder= {"e.g. "+this.props.example}
+                        value={this.state.inputValue}
                         onChange={this.handleChange}
                     />
                 </form>

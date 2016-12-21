@@ -20417,6 +20417,7 @@
 	
 	        _this.state = { showsSuggestions: false, inputValue: "" };
 	        _this.handleChange = _this.handleChange.bind(_this);
+	        _this.handleSelectSuggestions = _this.handleSelectSuggestions.bind(_this);
 	        return _this;
 	    }
 	
@@ -20425,6 +20426,11 @@
 	        value: function handleChange(event) {
 	            this.setState({ showsSuggestions: event.target.value.length > 0,
 	                inputValue: event.target.value });
+	        }
+	    }, {
+	        key: 'handleSelectSuggestions',
+	        value: function handleSelectSuggestions(value) {
+	            this.setState({ inputValue: value.target.innerHTML });
 	        }
 	    }, {
 	        key: 'renderItems',
@@ -20438,11 +20444,11 @@
 	                    { id: 'suggestion', key: item },
 	                    _react2.default.createElement(
 	                        'td',
-	                        null,
+	                        { onClick: this.handleSelectSuggestions, key: 'fdf' },
 	                        item
 	                    )
 	                );
-	            });
+	            }.bind(this));
 	        }
 	    }, {
 	        key: 'render',
@@ -20459,6 +20465,7 @@
 	                        type: 'text',
 	                        id: this.props.field,
 	                        placeholder: "e.g. " + this.props.example,
+	                        value: this.state.inputValue,
 	                        onChange: this.handleChange
 	                    })
 	                ),
