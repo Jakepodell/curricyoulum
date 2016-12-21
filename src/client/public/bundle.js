@@ -20320,6 +20320,7 @@
 	        key: 'render',
 	        value: function render() {
 	            var schools = [{ title: "Engineering", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png" }, { title: "Arts", img: "http://squad.se/wp-content/uploads/2016/08/Hard-Money-Icon-3.png" }, { title: "Human Ecology", img: "http://www.morethanprinting.co/images/educationIcon.png" }, { title: "Hotel", img: "http://www.hotel-r.net/im/hotel/gb/icon-hotel-18.png" }, { title: "CALS", img: "http://www.cals.nl/wp-content/themes/calscollegelocatie/assets/img/logo.svg" }];
+	            var items = ["thing1", "thing2", "thing3"];
 	            return _react2.default.createElement(
 	                'div',
 	                null,
@@ -20334,27 +20335,27 @@
 	                    _react2.default.createElement(
 	                        'div',
 	                        { id: 'input' },
-	                        _react2.default.createElement(_input2.default, { field: 'Major', example: 'Computer Science' })
+	                        _react2.default.createElement(_input2.default, { field: 'Major', example: 'Computer Science', items: items })
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { id: 'input' },
-	                        _react2.default.createElement(_input2.default, { field: 'Minor(s)', example: 'Cognitive Science' })
+	                        _react2.default.createElement(_input2.default, { field: 'Minor(s)', example: 'Cognitive Science', items: items })
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { id: 'input' },
-	                        _react2.default.createElement(_input2.default, { field: 'Classes Taken', example: 'AEM 2940' })
+	                        _react2.default.createElement(_input2.default, { field: 'Classes Taken', example: 'AEM 2940', items: items })
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { id: 'input' },
-	                        _react2.default.createElement(_input2.default, { field: 'Graduating Semester', example: 'Spring 2019' })
+	                        _react2.default.createElement(_input2.default, { field: 'Graduating Semester', example: 'Spring 2019', items: items })
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { id: 'input' },
-	                        _react2.default.createElement(_input2.default, { field: 'Desired Classes', example: 'CS 4700' })
+	                        _react2.default.createElement(_input2.default, { field: 'Desired Classes', example: 'CS 4700', items: items })
 	                    )
 	                )
 	            );
@@ -20408,14 +20409,34 @@
 	
 	        var _this = _possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).call(this, props));
 	
+	        _this.state = { showsSuggestions: false, inputValue: "" };
 	        _this.handleChange = _this.handleChange.bind(_this);
 	        return _this;
 	    }
 	
 	    _createClass(Input, [{
 	        key: 'handleChange',
-	        value: function handleChange() {
-	            //TODO
+	        value: function handleChange(event) {
+	            this.setState({ showsSuggestions: event.target.value.length > 0,
+	                inputValue: event.target.value });
+	        }
+	    }, {
+	        key: 'renderItems',
+	        value: function renderItems() {
+	            var inputValue = this.state.inputValue;
+	            return this.props.items.filter(function (item) {
+	                return item.includes(inputValue);
+	            }).map(function (item) {
+	                return _react2.default.createElement(
+	                    'tr',
+	                    { id: 'suggestion', key: item },
+	                    _react2.default.createElement(
+	                        'td',
+	                        null,
+	                        item
+	                    )
+	                );
+	            });
 	        }
 	    }, {
 	        key: 'render',
@@ -20430,9 +20451,19 @@
 	                    _react2.default.createElement('br', null),
 	                    _react2.default.createElement('input', {
 	                        type: 'text',
+	                        id: this.props.field,
 	                        placeholder: "e.g. " + this.props.example,
 	                        onChange: this.handleChange
 	                    })
+	                ),
+	                _react2.default.createElement(
+	                    'table',
+	                    { id: 'suggestions', className: 'hiddenish' },
+	                    _react2.default.createElement(
+	                        'tbody',
+	                        null,
+	                        this.state.showsSuggestions ? this.renderItems() : null
+	                    )
 	                )
 	            );
 	        }

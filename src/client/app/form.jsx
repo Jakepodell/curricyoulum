@@ -18,7 +18,8 @@ class Form extends React.Component {
             {title: "Human Ecology", img: "http://www.morethanprinting.co/images/educationIcon.png"},
             {title: "Hotel", img: "http://www.hotel-r.net/im/hotel/gb/icon-hotel-18.png"},
             {title: "CALS", img: "http://www.cals.nl/wp-content/themes/calscollegelocatie/assets/img/logo.svg"}
-        ]
+        ];
+        var items = ["thing1", "thing2", "thing3"];
         return (
             <div>
                 <div id = "input-container">
@@ -26,19 +27,19 @@ class Form extends React.Component {
                         <RadioImage schools = {schools} name = "schools"/>
                     </div>
                     <div id = "input">
-                        <Input field = "Major" example = "Computer Science"/>
+                        <Input field = "Major" example = "Computer Science" items = {items} />
                     </div>
                     <div id = "input">
-                        <Input field = "Minor(s)" example = "Cognitive Science"/>
+                        <Input field = "Minor(s)" example = "Cognitive Science" items = {items} />
                     </div>
                     <div id = "input">
-                        <Input field = "Classes Taken" example = "AEM 2940"/>
+                        <Input field = "Classes Taken" example = "AEM 2940" items = {items} />
                     </div>
                     <div id = "input">
-                        <Input field = "Graduating Semester" example = "Spring 2019"/>
+                        <Input field = "Graduating Semester" example = "Spring 2019" items = {items} />
                     </div>
                     <div id = "input">
-                        <Input field = "Desired Classes" example = "CS 4700"/>
+                        <Input field = "Desired Classes" example = "CS 4700" items = {items} />
                     </div>
                 </div>
             </div>
