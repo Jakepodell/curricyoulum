@@ -20405,7 +20405,7 @@
 	//----------------------INPUT--------------------------------------------
 	
 	/**
-	 * A single input field, derives its heading and search text from the field prop
+	 * A single input field, derives its heading, search text, and suggestion items from the field prop
 	 */
 	var Input = function (_React$Component) {
 	    _inherits(Input, _React$Component);
@@ -20418,10 +20418,27 @@
 	        _this.state = { showsSuggestions: false, inputValue: "" };
 	        _this.handleChange = _this.handleChange.bind(_this);
 	        _this.handleSelectSuggestions = _this.handleSelectSuggestions.bind(_this);
+	        _this.handleFocus = _this.handleFocus.bind(_this);
+	        _this.handleKeyPress = _this.handleKeyPress.bind(_this);
 	        return _this;
 	    }
 	
 	    _createClass(Input, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            document.addEventListener('keydown', this.handleEscape);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            document.removeEventListener('keydown', this.handleEscape);
+	        }
+	    }, {
+	        key: 'handleFocus',
+	        value: function handleFocus(event) {
+	            this.setState({ showsSuggestions: event.target.value.length > 0 });
+	        }
+	    }, {
 	        key: 'handleChange',
 	        value: function handleChange(event) {
 	            this.setState({ showsSuggestions: event.target.value.length > 0,
@@ -20431,6 +20448,13 @@
 	        key: 'handleSelectSuggestions',
 	        value: function handleSelectSuggestions(value) {
 	            this.setState({ inputValue: value.target.innerHTML });
+	            this.setState({ showsSuggestions: false });
+	        }
+	    }, {
+	        key: 'handleKeyPress',
+	        value: function handleKeyPress(event) {
+	            // handle a press of the escape key
+	            if (event.keyCode == 27) this.setState({ showsSuggestions: false });
 	        }
 	    }, {
 	        key: 'renderItems',
@@ -20461,7 +20485,7 @@
 	                    null,
 	                    this.props.field,
 	                    _react2.default.createElement('br', null),
-	                    _react2.default.createElement('input', {
+	                    _react2.default.createElement('input', { tabIndex: '0', onFocus: this.handleFocus,
 	                        type: 'text',
 	                        id: this.props.field,
 	                        placeholder: "e.g. " + this.props.example,
@@ -20471,11 +20495,11 @@
 	                ),
 	                _react2.default.createElement(
 	                    'table',
-	                    { id: 'suggestions', className: 'hiddenish' },
+	                    { id: 'suggestions', className: this.state.showsSuggestions ? "visible" : "hidden" },
 	                    _react2.default.createElement(
 	                        'tbody',
 	                        null,
-	                        this.state.showsSuggestions ? this.renderItems() : null
+	                        this.renderItems()
 	                    )
 	                )
 	            );
