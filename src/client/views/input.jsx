@@ -28,6 +28,10 @@ class Input extends React.Component {
         window.removeEventListener('click', this.handleWindowClick);
     }
 
+    componentDidUpdate() {
+        this.props.onChange(this.state.inputValue);
+    }
+
     handleInputFocus(event) {
         this.setState({showsSuggestions: event.target.value.length > 0});
     }

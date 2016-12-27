@@ -30,22 +30,30 @@ class Form extends React.Component {
             <div>
                 <div id = "input-container">
                     <div id = "input">
-                        <RadioImage schools = {schools} name = "schools"/>
+                        <div id = "radio-container">
+                            <p id = "form_title">School:</p>
+                            {/*TODO: move school data to external constants and loop through it*/}
+                            <RadioImage img ={schools[0].img} title = {schools[0].title} name = "schools" onSelectSchool = {this.props.onSelectSchool} />
+                            <RadioImage img ={schools[1].img} title = {schools[1].title} name = "schools" onSelectSchool = {this.props.onSelectSchool} />
+                            <RadioImage img ={schools[2].img} title = {schools[2].title} name = "schools" onSelectSchool = {this.props.onSelectSchool} />
+                            <RadioImage img ={schools[3].img} title = {schools[3].title} name = "schools" onSelectSchool = {this.props.onSelectSchool} />
+                            <RadioImage img ={schools[4].img} title = {schools[4].title} name = "schools" onSelectSchool = {this.props.onSelectSchool} />
+                        </div>
                     </div>
                     <div id = "input">
-                        <Input field = "Major" example = "Computer Science" items = {majors} />
+                        <Input field = "Major" example = "Computer Science" items = {majors} onChange = {this.props.onChangeMajor} />
                     </div>
                     <div id = "input">
-                        <Input field = "Minor(s)" example = "Cognitive Science" items = {minors} />
+                        <Input field = "Minor(s)" example = "Cognitive Science" items = {minors} onChange = {this.props.onChangeMinor} />
                     </div>
                     <div id = "input">
-                        <Input field = "Classes Taken" example = "AEM 2940" items = {classesTaken} />
+                        <Input field = "Classes Taken" example = "AEM 2940" items = {classesTaken} onChange = {this.props.onChangeClassesTaken} />
                     </div>
                     <div id = "input">
-                        <Input field = "Graduating Semester" example = "Spring 2019" items = {graduatingSemester} />
+                        <Input field = "Graduating Semester" example = "Spring 2019" items = {graduatingSemester} onChange = {this.props.onChangeClassesDesired} />
                     </div>
                     <div id = "input">
-                        <Input field = "Desired Classes" example = "CS 4700" items = {desiredClasses} />
+                        <Input field = "Desired Classes" example = "CS 4700" items = {desiredClasses} onChange = {this.props.onChangeGraduation} />
                     </div>
                 </div>
             </div>
