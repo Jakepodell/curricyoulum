@@ -9,39 +9,11 @@ const FormActions = {
         });
     },
 
-    changeMajor(text) {
+    submitForm(id) {
         Dispatcher.dispatch({
-            type: FormActionTypes.CHANGE_MAJOR,
-            text,
-        })
-    },
-
-    changeMinor(text) {
-        Dispatcher.dispatch({
-            type: FormActionTypes.CHANGE_MINOR,
-            text,
-        })
-    },
-
-    changeClassesTaken(text) {
-        Dispatcher.dispatch({
-            type: FormActionTypes.CHANGE_CLASSES_TAKEN,
-            text,
-        })
-    },
-
-    changeClassesDesired(text) {
-        Dispatcher.dispatch({
-            type: FormActionTypes.CHANGE_CLASSES_DESIRED,
-            text,
-        })
-    },
-
-    changeGraduation(text) {
-        Dispatcher.dispatch({
-            type: FormActionTypes.CHANGE_GRADUATION,
-            text,
-        })
+            type: FormActionTypes.SUBMIT_FORM,
+            id,
+        });
     },
 
 };

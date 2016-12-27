@@ -22158,27 +22158,27 @@
 	                    _react2.default.createElement(
 	                        'div',
 	                        { id: 'input' },
-	                        _react2.default.createElement(_input2.default, { field: 'Major', example: 'Computer Science', items: majors, onChange: this.props.onChangeMajor })
+	                        _react2.default.createElement(_input2.default, { field: 'Major', example: 'Computer Science', items: majors })
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { id: 'input' },
-	                        _react2.default.createElement(_input2.default, { field: 'Minor(s)', example: 'Cognitive Science', items: minors, onChange: this.props.onChangeMinor })
+	                        _react2.default.createElement(_input2.default, { field: 'Minor(s)', example: 'Cognitive Science', items: minors })
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { id: 'input' },
-	                        _react2.default.createElement(_input2.default, { field: 'Classes Taken', example: 'AEM 2940', items: classesTaken, onChange: this.props.onChangeClassesTaken })
+	                        _react2.default.createElement(_input2.default, { field: 'Classes Taken', example: 'AEM 2940', items: classesTaken })
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { id: 'input' },
-	                        _react2.default.createElement(_input2.default, { field: 'Graduating Semester', example: 'Spring 2019', items: graduatingSemester, onChange: this.props.onChangeClassesDesired })
+	                        _react2.default.createElement(_input2.default, { field: 'Graduating Semester', example: 'Spring 2019', items: graduatingSemester })
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { id: 'input' },
-	                        _react2.default.createElement(_input2.default, { field: 'Desired Classes', example: 'CS 4700', items: desiredClasses, onChange: this.props.onChangeGraduation })
+	                        _react2.default.createElement(_input2.default, { field: 'Desired Classes', example: 'CS 4700', items: desiredClasses })
 	                    )
 	                )
 	            );
@@ -22265,11 +22265,6 @@
 	        value: function componentWillUnmount() {
 	            document.removeEventListener('keydown', this.handleKeyPress);
 	            window.removeEventListener('click', this.handleWindowClick);
-	        }
-	    }, {
-	        key: 'componentDidUpdate',
-	        value: function componentDidUpdate() {
-	            this.props.onChange(this.state.inputValue);
 	        }
 	    }, {
 	        key: 'handleInputFocus',
@@ -22552,12 +22547,7 @@
 	                null,
 	                _react2.default.createElement(_Banner2.default, null),
 	                _react2.default.createElement(_form2.default, { onSelectSchool: this.state.onSelectSchool,
-	                    onChangeMajor: this.state.onChangeMajor,
-	                    onChangeMinor: this.state.onChangeMinor,
-	                    onChangeClassesTaken: this.state.onChangeClassesTaken,
-	                    onChangeClassesDesired: this.state.onChangeClassesDesired,
-	                    onChangeGraduation: this.state.onChangeGraduation
-	                })
+	                    onSubmit: this.state.onSubmit })
 	            );
 	        }
 	    }], [{
@@ -22571,11 +22561,7 @@
 	            return {
 	                state: _FormStore2.default.getState(),
 	                onSelectSchool: _FormActions2.default.selectSchool,
-	                onChangeMajor: _FormActions2.default.changeMajor,
-	                onChangeMinor: _FormActions2.default.changeMinor,
-	                onChangeClassesTaken: _FormActions2.default.changeClassesTaken,
-	                onChangeClassesDesired: _FormActions2.default.changeClassesDesired,
-	                onChangeGraduation: _FormActions2.default.changeGraduation
+	                onSubmit: _FormActions2.default.submimtForm
 	            };
 	        }
 	    }]);
@@ -22694,12 +22680,7 @@
 	        key: 'getInitialState',
 	        value: function getInitialState() {
 	            return {
-	                school: "",
-	                major: "",
-	                minor: "",
-	                classesTaken: "",
-	                classesDesired: "",
-	                graduation: ""
+	                school: ""
 	            };
 	        }
 	    }, {
@@ -22707,22 +22688,9 @@
 	        value: function reduce(state, action) {
 	            switch (action.type) {
 	                case _FormActionTypes2.default.SELECT_SCHOOL:
-	                    state.school = action.id;
+	                    state.school = action.school;
 	                    return state;
-	                case _FormActionTypes2.default.CHANGE_MAJOR:
-	                    state.major = action.text;
-	                    return state;
-	                case _FormActionTypes2.default.CHANGE_MINOR:
-	                    state.minor = action.text;
-	                    return state;
-	                case _FormActionTypes2.default.CHANGE_CLASSES_TAKEN:
-	                    state.classesTaken = action.text;
-	                    return state;
-	                case _FormActionTypes2.default.CHANGE_CLASSES_DESIRED:
-	                    state.classesDesired = action.text;
-	                    return state;
-	                case _FormActionTypes2.default.CHANGE_GRADUATION:
-	                    state.graduation = action.text;
+	                case _FormActionTypes2.default.SUBMIT_FORM:
 	                    return state;
 	                default:
 	                    return state;
@@ -22748,12 +22716,8 @@
 	    value: true
 	});
 	var FormActionTypes = {
-	    SELECT_SCHOOL: 'SELECT_SCHOOL',
-	    CHANGE_MAJOR: 'CHANGE_MAJOR',
-	    CHANGE_MINOR: 'CHANGE_MINOR',
-	    CHANGE_CLASSES_TAKEN: 'CHANGE_CLASSES_TAKEN',
-	    CHANGE_CLASSES_DESIRED: 'CHANGE_CLASSES_DESIRED',
-	    CHANGE_GRADUATION: 'CHANGE_GRADUATION'
+	    SUBMIT_FORM: 'SUBMIT_FORM',
+	    SELECT_SCHOOL: 'SELECT_SCHOOL'
 	};
 	
 	exports.default = FormActionTypes;
@@ -22788,34 +22752,10 @@
 	            id: id
 	        });
 	    },
-	    changeMajor: function changeMajor(text) {
+	    submitForm: function submitForm(id) {
 	        _Dispatcher2.default.dispatch({
-	            type: _FormActionTypes2.default.CHANGE_MAJOR,
-	            text: text
-	        });
-	    },
-	    changeMinor: function changeMinor(text) {
-	        _Dispatcher2.default.dispatch({
-	            type: _FormActionTypes2.default.CHANGE_MINOR,
-	            text: text
-	        });
-	    },
-	    changeClassesTaken: function changeClassesTaken(text) {
-	        _Dispatcher2.default.dispatch({
-	            type: _FormActionTypes2.default.CHANGE_CLASSES_TAKEN,
-	            text: text
-	        });
-	    },
-	    changeClassesDesired: function changeClassesDesired(text) {
-	        _Dispatcher2.default.dispatch({
-	            type: _FormActionTypes2.default.CHANGE_CLASSES_DESIRED,
-	            text: text
-	        });
-	    },
-	    changeGraduation: function changeGraduation(text) {
-	        _Dispatcher2.default.dispatch({
-	            type: _FormActionTypes2.default.CHANGE_GRADUATION,
-	            text: text
+	            type: _FormActionTypes2.default.SUBMIT_FORM,
+	            id: id
 	        });
 	    }
 	};

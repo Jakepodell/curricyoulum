@@ -15,11 +15,7 @@ class AppContainer extends React.Component {
         return {
             state: Store.getState(),
             onSelectSchool: FormActions.selectSchool,
-            onChangeMajor: FormActions.changeMajor,
-            onChangeMinor: FormActions.changeMinor,
-            onChangeClassesTaken: FormActions.changeClassesTaken,
-            onChangeClassesDesired: FormActions.changeClassesDesired,
-            onChangeGraduation: FormActions.changeGraduation,
+            onSubmit: FormActions.submimtForm,
         };
     }
 
@@ -28,12 +24,7 @@ class AppContainer extends React.Component {
             <div>
                 <Banner />
                 <Form onSelectSchool = {this.state.onSelectSchool}
-                      onChangeMajor = {this.state.onChangeMajor}
-                      onChangeMinor = {this.state.onChangeMinor}
-                      onChangeClassesTaken = {this.state.onChangeClassesTaken}
-                      onChangeClassesDesired = {this.state.onChangeClassesDesired}
-                      onChangeGraduation = {this.state.onChangeGraduation}
-                />
+                      onSubmit = {this.state.onSubmit} />
             </div>
         );
     }

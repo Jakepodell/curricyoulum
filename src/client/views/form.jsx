@@ -41,19 +41,19 @@ class Form extends React.Component {
                         </div>
                     </div>
                     <div id = "input">
-                        <Input field = "Major" example = "Computer Science" items = {majors} onChange = {this.props.onChangeMajor} />
+                        <Input field = "Major" example = "Computer Science" items = {majors} />
                     </div>
                     <div id = "input">
-                        <Input field = "Minor(s)" example = "Cognitive Science" items = {minors} onChange = {this.props.onChangeMinor} />
+                        <Input field = "Minor(s)" example = "Cognitive Science" items = {minors} />
                     </div>
                     <div id = "input">
-                        <Input field = "Classes Taken" example = "AEM 2940" items = {classesTaken} onChange = {this.props.onChangeClassesTaken} />
+                        <Input field = "Classes Taken" example = "AEM 2940" items = {classesTaken} />
                     </div>
                     <div id = "input">
-                        <Input field = "Graduating Semester" example = "Spring 2019" items = {graduatingSemester} onChange = {this.props.onChangeClassesDesired} />
+                        <Input field = "Graduating Semester" example = "Spring 2019" items = {graduatingSemester} />
                     </div>
                     <div id = "input">
-                        <Input field = "Desired Classes" example = "CS 4700" items = {desiredClasses} onChange = {this.props.onChangeGraduation} />
+                        <Input field = "Desired Classes" example = "CS 4700" items = {desiredClasses} />
                     </div>
                 </div>
             </div>
