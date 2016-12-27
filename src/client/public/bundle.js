@@ -20429,13 +20429,13 @@
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
 	            document.addEventListener('keydown', this.handleKeyPress);
-	            window.addEventListener('click', this.handleKeyPress);
+	            window.addEventListener('click', this.handleWindowClick);
 	        }
 	    }, {
 	        key: 'componentWillUnmount',
 	        value: function componentWillUnmount() {
 	            document.removeEventListener('keydown', this.handleKeyPress);
-	            window.removeEventListener('click', this.handleKeyPress);
+	            window.removeEventListener('click', this.handleWindowClick);
 	        }
 	    }, {
 	        key: 'handleInputFocus',

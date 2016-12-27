@@ -20,12 +20,12 @@ class Input extends React.Component {
 
     componentWillMount() {
         document.addEventListener('keydown', this.handleKeyPress);
-        window.addEventListener('click', this.handleKeyPress);
+        window.addEventListener('click', this.handleWindowClick);
     }
 
     componentWillUnmount() {
         document.removeEventListener('keydown', this.handleKeyPress);
-        window.removeEventListener('click', this.handleKeyPress);
+        window.removeEventListener('click', this.handleWindowClick);
     }
 
     handleInputFocus(event) {
