@@ -20320,6 +20320,13 @@
 	        key: 'render',
 	        value: function render() {
 	            var schools = [{ title: "Engineering", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png" }, { title: "Arts", img: "http://squad.se/wp-content/uploads/2016/08/Hard-Money-Icon-3.png" }, { title: "Human Ecology", img: "http://www.morethanprinting.co/images/educationIcon.png" }, { title: "Hotel", img: "http://www.hotel-r.net/im/hotel/gb/icon-hotel-18.png" }, { title: "CALS", img: "http://www.cals.nl/wp-content/themes/calscollegelocatie/assets/img/logo.svg" }];
+	
+	            var majors = ["Computer Science", "Hotel Things", "Economics", "Accounting", "Applied and Engineering Physics", "Art History", "Basket Weaving"];
+	            var minors = majors;
+	            var classesTaken = ["AEM 2540", "CS 4780", "ECE 3210", "MATH 2930"];
+	            var graduatingSemester = ["Spring 2017", "Fall 2017", "Spring 2018", "Fall 2018", "Spring 2019"];
+	            var desiredClasses = classesTaken;
+	
 	            return _react2.default.createElement(
 	                'div',
 	                null,
@@ -20334,27 +20341,27 @@
 	                    _react2.default.createElement(
 	                        'div',
 	                        { id: 'input' },
-	                        _react2.default.createElement(_input2.default, { field: 'Major', example: 'Computer Science' })
+	                        _react2.default.createElement(_input2.default, { field: 'Major', example: 'Computer Science', items: majors })
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { id: 'input' },
-	                        _react2.default.createElement(_input2.default, { field: 'Minor(s)', example: 'Cognitive Science' })
+	                        _react2.default.createElement(_input2.default, { field: 'Minor(s)', example: 'Cognitive Science', items: minors })
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { id: 'input' },
-	                        _react2.default.createElement(_input2.default, { field: 'Classes Taken', example: 'AEM 2940' })
+	                        _react2.default.createElement(_input2.default, { field: 'Classes Taken', example: 'AEM 2940', items: classesTaken })
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { id: 'input' },
-	                        _react2.default.createElement(_input2.default, { field: 'Graduating Semester', example: 'Spring 2019' })
+	                        _react2.default.createElement(_input2.default, { field: 'Graduating Semester', example: 'Spring 2019', items: graduatingSemester })
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { id: 'input' },
-	                        _react2.default.createElement(_input2.default, { field: 'Desired Classes', example: 'CS 4700' })
+	                        _react2.default.createElement(_input2.default, { field: 'Desired Classes', example: 'CS 4700', items: desiredClasses })
 	                    )
 	                )
 	            );
@@ -20398,7 +20405,8 @@
 	//----------------------INPUT--------------------------------------------
 	
 	/**
-	 * A single input field, derives its heading and search text from the field prop
+	 * A single input field, derives its heading, search text, and suggestion items from the field prop.
+	 * Includes a dropdown of selectable suggestions.
 	 */
 	var Input = function (_React$Component) {
 	    _inherits(Input, _React$Component);
@@ -20408,14 +20416,72 @@
 	
 	        var _this = _possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).call(this, props));
 	
-	        _this.handleChange = _this.handleChange.bind(_this);
+	        _this.state = { showsSuggestions: false, inputValue: "" };
+	        _this.handleInputTextChange = _this.handleInputTextChange.bind(_this);
+	        _this.handleSelectSuggestion = _this.handleSelectSuggestion.bind(_this);
+	        _this.handleInputFocus = _this.handleInputFocus.bind(_this);
+	        _this.handleKeyPress = _this.handleKeyPress.bind(_this);
+	        _this.handleWindowClick = _this.handleWindowClick.bind(_this);
 	        return _this;
 	    }
 	
 	    _createClass(Input, [{
-	        key: 'handleChange',
-	        value: function handleChange() {
-	            //TODO
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            document.addEventListener('keydown', this.handleKeyPress);
+	            window.addEventListener('click', this.handleWindowClick);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            document.removeEventListener('keydown', this.handleKeyPress);
+	            window.removeEventListener('click', this.handleWindowClick);
+	        }
+	    }, {
+	        key: 'handleInputFocus',
+	        value: function handleInputFocus(event) {
+	            this.setState({ showsSuggestions: event.target.value.length > 0 });
+	        }
+	    }, {
+	        key: 'handleInputTextChange',
+	        value: function handleInputTextChange(event) {
+	            this.setState({ showsSuggestions: event.target.value.length > 0,
+	                inputValue: event.target.value });
+	        }
+	    }, {
+	        key: 'handleSelectSuggestion',
+	        value: function handleSelectSuggestion(value) {
+	            this.setState({ inputValue: value.target.innerHTML });
+	            this.setState({ showsSuggestions: false });
+	        }
+	    }, {
+	        key: 'handleKeyPress',
+	        value: function handleKeyPress(event) {
+	            if (event.keyCode == 27) //escape key
+	                this.setState({ showsSuggestions: false });
+	        }
+	    }, {
+	        key: 'handleWindowClick',
+	        value: function handleWindowClick(event) {
+	            if (event.target.id != this.props.field) this.setState({ showsSuggestions: false });
+	        }
+	    }, {
+	        key: 'renderItems',
+	        value: function renderItems() {
+	            var inputValue = this.state.inputValue;
+	            return this.props.items.filter(function (item) {
+	                return item.toLowerCase().includes(inputValue.toLowerCase()); //see if there is a better way to do this using a regex
+	            }).map(function (item) {
+	                return _react2.default.createElement(
+	                    'tr',
+	                    { id: 'suggestion', key: item },
+	                    _react2.default.createElement(
+	                        'td',
+	                        { onClick: this.handleSelectSuggestion, key: 'fdf' },
+	                        item
+	                    )
+	                );
+	            }.bind(this));
 	        }
 	    }, {
 	        key: 'render',
@@ -20428,11 +20494,23 @@
 	                    null,
 	                    this.props.field,
 	                    _react2.default.createElement('br', null),
-	                    _react2.default.createElement('input', {
+	                    _react2.default.createElement('input', { tabIndex: '0',
+	                        onFocus: this.handleInputFocus,
 	                        type: 'text',
+	                        id: this.props.field,
 	                        placeholder: "e.g. " + this.props.example,
-	                        onChange: this.handleChange
+	                        value: this.state.inputValue,
+	                        onChange: this.handleInputTextChange
 	                    })
+	                ),
+	                _react2.default.createElement(
+	                    'table',
+	                    { id: 'suggestions', className: this.state.showsSuggestions ? "visible" : "hidden" },
+	                    _react2.default.createElement(
+	                        'tbody',
+	                        null,
+	                        this.renderItems()
+	                    )
 	                )
 	            );
 	        }
