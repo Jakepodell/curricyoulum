@@ -10,37 +10,45 @@ class Input extends React.Component {
     constructor(props) {
         super(props);
         this.state = {showsSuggestions: false, inputValue: ""};
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSelectSuggestions = this.handleSelectSuggestions.bind(this);
-        this.handleFocus = this.handleFocus.bind(this);
+        this.handleInputTextChange = this.handleInputTextChange.bind(this);
+        this.handleSelectSuggestion = this.handleSelectSuggestion.bind(this);
+        this.handleInputFocus = this.handleInputFocus.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
+        this.handleWindowClick = this.handleWindowClick.bind(this);
     }
 
-    componentDidMount() {
-        document.addEventListener('keydown', this.handleEscape);
+    componentWillMount() {
+        document.addEventListener('keydown', this.handleKeyPress);
+        window.addEventListener('click', this.handleKeyPress);
     }
 
     componentWillUnmount() {
-        document.removeEventListener('keydown', this.handleEscape);
+        document.removeEventListener('keydown', this.handleKeyPress);
+        window.removeEventListener('click', this.handleKeyPress);
     }
 
-    handleFocus(event) {
+    handleInputFocus(event) {
         this.setState({showsSuggestions: event.target.value.length > 0});
     }
 
-    handleChange(event) {
+    handleInputTextChange(event) {
         this.setState({showsSuggestions: event.target.value.length > 0,
                         inputValue: event.target.value});
     }
 
-    handleSelectSuggestions(value) {
+    handleSelectSuggestion(value) {
         this.setState({inputValue: value.target.innerHTML});
         this.setState({showsSuggestions: false});
     }
 
     handleKeyPress(event) {
-        // handle a press of the escape key
-        if(event.keyCode == 27) this.setState({showsSuggestions: false});
+        if(event.keyCode == 27) //escape key
+            this.setState({showsSuggestions: false});
+    }
+
+    handleWindowClick(event) {
+        if(event.target.id != this.props.field)
+            this.setState({showsSuggestions: false});
     }
 
     renderItems() {
@@ -50,7 +58,7 @@ class Input extends React.Component {
         }).map(function(item) {
             return(
                 <tr id = "suggestion" key = {item} >
-                    <td onClick={this.handleSelectSuggestions} key="fdf">
+                    <td onClick={this.handleSelectSuggestion} key="fdf">
                         {item}
                     </td>
                 </tr>
@@ -64,12 +72,13 @@ class Input extends React.Component {
                 <form>
                     {this.props.field}
                     <br/>
-                    <input tabIndex = "0" onFocus = {this.handleFocus}
+                    <input tabIndex = "0"
+                        onFocus = {this.handleInputFocus}
                         type="text"
                         id={this.props.field}
                         placeholder= {"e.g. "+this.props.example}
                         value={this.state.inputValue}
-                        onChange={this.handleChange}
+                        onChange={this.handleInputTextChange}
                     />
                 </form>
 

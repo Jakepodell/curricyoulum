@@ -20416,45 +20416,53 @@
 	        var _this = _possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).call(this, props));
 	
 	        _this.state = { showsSuggestions: false, inputValue: "" };
-	        _this.handleChange = _this.handleChange.bind(_this);
-	        _this.handleSelectSuggestions = _this.handleSelectSuggestions.bind(_this);
-	        _this.handleFocus = _this.handleFocus.bind(_this);
+	        _this.handleInputTextChange = _this.handleInputTextChange.bind(_this);
+	        _this.handleSelectSuggestion = _this.handleSelectSuggestion.bind(_this);
+	        _this.handleInputFocus = _this.handleInputFocus.bind(_this);
 	        _this.handleKeyPress = _this.handleKeyPress.bind(_this);
+	        _this.handleWindowClick = _this.handleWindowClick.bind(_this);
 	        return _this;
 	    }
 	
 	    _createClass(Input, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            document.addEventListener('keydown', this.handleEscape);
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            document.addEventListener('keydown', this.handleKeyPress);
+	            window.addEventListener('click', this.handleKeyPress);
 	        }
 	    }, {
 	        key: 'componentWillUnmount',
 	        value: function componentWillUnmount() {
-	            document.removeEventListener('keydown', this.handleEscape);
+	            document.removeEventListener('keydown', this.handleKeyPress);
+	            window.removeEventListener('click', this.handleKeyPress);
 	        }
 	    }, {
-	        key: 'handleFocus',
-	        value: function handleFocus(event) {
+	        key: 'handleInputFocus',
+	        value: function handleInputFocus(event) {
 	            this.setState({ showsSuggestions: event.target.value.length > 0 });
 	        }
 	    }, {
-	        key: 'handleChange',
-	        value: function handleChange(event) {
+	        key: 'handleInputTextChange',
+	        value: function handleInputTextChange(event) {
 	            this.setState({ showsSuggestions: event.target.value.length > 0,
 	                inputValue: event.target.value });
 	        }
 	    }, {
-	        key: 'handleSelectSuggestions',
-	        value: function handleSelectSuggestions(value) {
+	        key: 'handleSelectSuggestion',
+	        value: function handleSelectSuggestion(value) {
 	            this.setState({ inputValue: value.target.innerHTML });
 	            this.setState({ showsSuggestions: false });
 	        }
 	    }, {
 	        key: 'handleKeyPress',
 	        value: function handleKeyPress(event) {
-	            // handle a press of the escape key
-	            if (event.keyCode == 27) this.setState({ showsSuggestions: false });
+	            if (event.keyCode == 27) //escape key
+	                this.setState({ showsSuggestions: false });
+	        }
+	    }, {
+	        key: 'handleWindowClick',
+	        value: function handleWindowClick(event) {
+	            if (event.target.id != this.props.field) this.setState({ showsSuggestions: false });
 	        }
 	    }, {
 	        key: 'renderItems',
@@ -20468,7 +20476,7 @@
 	                    { id: 'suggestion', key: item },
 	                    _react2.default.createElement(
 	                        'td',
-	                        { onClick: this.handleSelectSuggestions, key: 'fdf' },
+	                        { onClick: this.handleSelectSuggestion, key: 'fdf' },
 	                        item
 	                    )
 	                );
@@ -20485,12 +20493,13 @@
 	                    null,
 	                    this.props.field,
 	                    _react2.default.createElement('br', null),
-	                    _react2.default.createElement('input', { tabIndex: '0', onFocus: this.handleFocus,
+	                    _react2.default.createElement('input', { tabIndex: '0',
+	                        onFocus: this.handleInputFocus,
 	                        type: 'text',
 	                        id: this.props.field,
 	                        placeholder: "e.g. " + this.props.example,
 	                        value: this.state.inputValue,
-	                        onChange: this.handleChange
+	                        onChange: this.handleInputTextChange
 	                    })
 	                ),
 	                _react2.default.createElement(
