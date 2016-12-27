@@ -20405,7 +20405,8 @@
 	//----------------------INPUT--------------------------------------------
 	
 	/**
-	 * A single input field, derives its heading, search text, and suggestion items from the field prop
+	 * A single input field, derives its heading, search text, and suggestion items from the field prop.
+	 * Includes a dropdown of selectable suggestions.
 	 */
 	var Input = function (_React$Component) {
 	    _inherits(Input, _React$Component);

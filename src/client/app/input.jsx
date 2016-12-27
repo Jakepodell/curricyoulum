@@ -4,7 +4,8 @@ import {render} from 'react-dom';
 //----------------------INPUT--------------------------------------------
 
 /**
- * A single input field, derives its heading, search text, and suggestion items from the field prop
+ * A single input field, derives its heading, search text, and suggestion items from the field prop.
+ * Includes a dropdown of selectable suggestions.
  */
 class Input extends React.Component {
     constructor(props) {
