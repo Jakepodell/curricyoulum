@@ -1,5 +1,6 @@
 import FormActionTypes from './FormActionTypes.jsx';
 import Dispatcher from './Dispatcher.jsx';
+import WebApiUtils from '../utils/WebApiUtils.jsx';
 
 const FormActions = {
     selectSchool(id) {
@@ -7,6 +8,7 @@ const FormActions = {
             type: FormActionTypes.SELECT_SCHOOL,
             id,
         });
+        WebApiUtils.submit("engineering", "computer science");
     },
 
     submitForm(id) {
@@ -14,6 +16,7 @@ const FormActions = {
             type: FormActionTypes.SUBMIT_FORM,
             id,
         });
+        WebApiUtils.submit("engineering", "computer science");
     },
 
 };
