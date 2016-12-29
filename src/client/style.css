@@ -1,17 +1,18 @@
 #banner_image {
-    width: 100%;
-    display: block;
-    height: 650px;
+    height: 600px;
     overflow: hidden;
+}
+
+#banner_image img {
+    width: 100%;
 }
 
 #banner_image #inner_logo {
     display: block;
-    width:50%;
     position: absolute;
-    top: 250px;
-    width: 60%;
-    margin-left: 20%;
+    top: 160px;
+    width: 70%;
+    margin-left: 15%;
 }
 
 #banner_image #inner_logo img {

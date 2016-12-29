@@ -2,6 +2,7 @@ import React from 'react';
 import {render} from 'react-dom';
 import Input from './input.jsx';
 import RadioImage from './radio-image.jsx';
+import Constants from '../constants/constants.jsx';
 
 /**
  * A list of inputs, created from elements of the fields prop
@@ -11,14 +12,14 @@ class Form extends React.Component {
         super(props);
     }
 
+    renderSchools() {
+        return Constants.schools.map((school) => {
+            return <RadioImage key = {school.title} img ={school.img} title = {school.title} name = "schools" onSelectSchool = {this.props.onSelectSchool} />
+        });
+    }
+
     render() {
-        let schools = [
-            {title: "Engineering", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png"},
-            {title: "Arts", img: "http://squad.se/wp-content/uploads/2016/08/Hard-Money-Icon-3.png"},
-            {title: "Human Ecology", img: "http://www.morethanprinting.co/images/educationIcon.png"},
-            {title: "Hotel", img: "http://www.hotel-r.net/im/hotel/gb/icon-hotel-18.png"},
-            {title: "CALS", img: "http://www.cals.nl/wp-content/themes/calscollegelocatie/assets/img/logo.svg"}
-        ];
+        let schools = Constants.schools;
 
         let majors = ["Computer Science", "Hotel Things", "Economics", "Accounting", "Applied and Engineering Physics", "Art History", "Basket Weaving"];
         let minors = majors;
@@ -32,12 +33,7 @@ class Form extends React.Component {
                     <div id = "input">
                         <div id = "radio-container">
                             <p id = "form_title">School:</p>
-                            {/*TODO: move school data to external constants and loop through it*/}
-                            <RadioImage img ={schools[0].img} title = {schools[0].title} name = "schools" onSelectSchool = {this.props.onSelectSchool} />
-                            <RadioImage img ={schools[1].img} title = {schools[1].title} name = "schools" onSelectSchool = {this.props.onSelectSchool} />
-                            <RadioImage img ={schools[2].img} title = {schools[2].title} name = "schools" onSelectSchool = {this.props.onSelectSchool} />
-                            <RadioImage img ={schools[3].img} title = {schools[3].title} name = "schools" onSelectSchool = {this.props.onSelectSchool} />
-                            <RadioImage img ={schools[4].img} title = {schools[4].title} name = "schools" onSelectSchool = {this.props.onSelectSchool} />
+                            {this.renderSchools()}
                         </div>
                     </div>
                     <div id = "input">

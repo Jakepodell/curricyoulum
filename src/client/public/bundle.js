@@ -22100,6 +22100,10 @@
 	
 	var _radioImage2 = _interopRequireDefault(_radioImage);
 	
+	var _constants = __webpack_require__(/*! ../constants/constants.jsx */ 202);
+	
+	var _constants2 = _interopRequireDefault(_constants);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -22121,9 +22125,18 @@
 	    }
 	
 	    _createClass(Form, [{
+	        key: 'renderSchools',
+	        value: function renderSchools() {
+	            var _this2 = this;
+	
+	            return _constants2.default.schools.map(function (school) {
+	                return _react2.default.createElement(_radioImage2.default, { key: school.title, img: school.img, title: school.title, name: 'schools', onSelectSchool: _this2.props.onSelectSchool });
+	            });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var schools = [{ title: "Engineering", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png" }, { title: "Arts", img: "http://squad.se/wp-content/uploads/2016/08/Hard-Money-Icon-3.png" }, { title: "Human Ecology", img: "http://www.morethanprinting.co/images/educationIcon.png" }, { title: "Hotel", img: "http://www.hotel-r.net/im/hotel/gb/icon-hotel-18.png" }, { title: "CALS", img: "http://www.cals.nl/wp-content/themes/calscollegelocatie/assets/img/logo.svg" }];
+	            var schools = _constants2.default.schools;
 	
 	            var majors = ["Computer Science", "Hotel Things", "Economics", "Accounting", "Applied and Engineering Physics", "Art History", "Basket Weaving"];
 	            var minors = majors;
@@ -22148,11 +22161,7 @@
 	                                { id: 'form_title' },
 	                                'School:'
 	                            ),
-	                            _react2.default.createElement(_radioImage2.default, { img: schools[0].img, title: schools[0].title, name: 'schools', onSelectSchool: this.props.onSelectSchool }),
-	                            _react2.default.createElement(_radioImage2.default, { img: schools[1].img, title: schools[1].title, name: 'schools', onSelectSchool: this.props.onSelectSchool }),
-	                            _react2.default.createElement(_radioImage2.default, { img: schools[2].img, title: schools[2].title, name: 'schools', onSelectSchool: this.props.onSelectSchool }),
-	                            _react2.default.createElement(_radioImage2.default, { img: schools[3].img, title: schools[3].title, name: 'schools', onSelectSchool: this.props.onSelectSchool }),
-	                            _react2.default.createElement(_radioImage2.default, { img: schools[4].img, title: schools[4].title, name: 'schools', onSelectSchool: this.props.onSelectSchool })
+	                            this.renderSchools()
 	                        )
 	                    ),
 	                    _react2.default.createElement(
@@ -22467,11 +22476,11 @@
 	            return _react2.default.createElement(
 	                'div',
 	                { id: 'banner_image' },
-	                _react2.default.createElement('img', { src: 'img/cornell_background_offset.jpg' }),
+	                _react2.default.createElement('img', { src: 'img/cornell_background_offset_cropped.jpg' }),
 	                _react2.default.createElement(
 	                    'div',
 	                    { id: 'inner_logo' },
-	                    _react2.default.createElement('img', { src: 'img/cur_logo.png' })
+	                    _react2.default.createElement('img', { src: 'img/final_logo.png' })
 	                )
 	            );
 	        }
@@ -22618,11 +22627,11 @@
 	            return _react2.default.createElement(
 	                'div',
 	                { id: 'banner_image' },
-	                _react2.default.createElement('img', { src: 'img/cornell_background_offset.jpg' }),
+	                _react2.default.createElement('img', { src: 'img/cornell_background_offset_cropped.jpg' }),
 	                _react2.default.createElement(
 	                    'div',
 	                    { id: 'inner_logo' },
-	                    _react2.default.createElement('img', { src: 'img/cur_logo.png' })
+	                    _react2.default.createElement('img', { src: 'img/final_logo.png' })
 	                )
 	            );
 	        }
@@ -24709,6 +24718,19 @@
 	  return header;
 	};
 
+
+/***/ },
+/* 202 */
+/*!********************************************!*\
+  !*** ./src/client/constants/constants.jsx ***!
+  \********************************************/
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = {
+	    schools: [{ title: "Engineering", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png" }, { title: "Arts", img: "http://squad.se/wp-content/uploads/2016/08/Hard-Money-Icon-3.png" }, { title: "Human Ecology", img: "http://www.morethanprinting.co/images/educationIcon.png" }, { title: "Hotel", img: "http://www.hotel-r.net/im/hotel/gb/icon-hotel-18.png" }, { title: "CALS", img: "http://www.cals.nl/wp-content/themes/calscollegelocatie/assets/img/logo.svg" }]
+	};
 
 /***/ }
 /******/ ]);
