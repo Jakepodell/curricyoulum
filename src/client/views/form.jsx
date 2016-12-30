@@ -19,14 +19,6 @@ class Form extends React.Component {
     }
 
     render() {
-        let schools = Constants.schools;
-
-        let majors = ["Computer Science", "Hotel Things", "Economics", "Accounting", "Applied and Engineering Physics", "Art History", "Basket Weaving"];
-        let minors = majors;
-        let classesTaken = ["AEM 2540", "CS 4780", "ECE 3210", "MATH 2930"];
-        let graduatingSemester = ["Spring 2017", "Fall 2017", "Spring 2018", "Fall 2018", "Spring 2019"]
-        let desiredClasses = classesTaken;
-
         return (
             <div>
                 <div id = "input-container">
@@ -36,21 +28,12 @@ class Form extends React.Component {
                             {this.renderSchools()}
                         </div>
                     </div>
-                    <div id = "input">
-                        <Input field = "Major" example = "Computer Science" items = {majors} />
-                    </div>
-                    <div id = "input">
-                        <Input field = "Minor(s)" example = "Cognitive Science" items = {minors} />
-                    </div>
-                    <div id = "input">
-                        <Input field = "Classes Taken" example = "AEM 2940" items = {classesTaken} />
-                    </div>
-                    <div id = "input">
-                        <Input field = "Graduating Semester" example = "Spring 2019" items = {graduatingSemester} />
-                    </div>
-                    <div id = "input">
-                        <Input field = "Desired Classes" example = "CS 4700" items = {desiredClasses} />
-                    </div>
+                    <hr/>
+                    <Input field = "Major" example = "Computer Science" items = {Constants.majors} />
+                    <Input field = "Minor(s)" example = "Cognitive Science" items = {Constants.minors} />
+                    <Input field = "Classes Taken" example = "AEM 2940" items = {Constants.classesTaken} />
+                    <Input field = "Graduating Semester" example = "Spring 2019" items = {Constants.graduatingSemester} />
+                    <Input field = "Desired Classes" example = "CS 4700" items = {Constants.classesDesired} />
                 </div>
             </div>
         );

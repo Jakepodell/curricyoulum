@@ -69,7 +69,7 @@ class Input extends React.Component {
 
     render() {
         return (
-            <div>
+            <div id = "input">
                 <form>
                     {this.props.field}
                     <br/>
