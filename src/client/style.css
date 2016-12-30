@@ -19,22 +19,23 @@
     width: 100%;
 }
 
-#input-container #input {
+#form-container #form-element {
     list-style-type: none;
     padding: 5px;
     margin: 10px auto;
     color: #4b4b4b;
+    display: inline-block;
 }
 
-#input-container select {
+#form-container select {
     color: black;
 }
 
-#input-container input {
+#form-container input {
     color: black;
 }
 
-#input-container {
+#form-container {
     display: block;
     margin: 100px auto;
     width:90%;
@@ -53,6 +54,45 @@ label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
     border:2px solid #f00;
 }
 
+#input-label {
+    width: 150px;
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 7px;
+}
+
+#input-container {
+    border-style: solid;
+    border-width: 1px;
+    display: inline-block;
+    border-color: #565656;
+    min-width: 325px;
+    height: 35px;
+}
+
+#input-container input {
+    border-style: none;
+    height: 100%;
+    width: 100%;
+}
+
+#input-container #bubble {
+    display: inline-block;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 8px;
+    padding: 2px 6px;
+    margin: 5px 3px;
+    font-size: 12px;
+    background-color: #eeeeee;
+    float: left;
+}
+
+#input-sizer {
+    width: auto;
+    height: 100%;
+    overflow: hidden;
+}
 #radio-container img {
     width: 100px;
     height: 100px;
@@ -71,6 +111,7 @@ label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
     width: 300px;
     border-style: solid;
     border-width: 0 1px 1px 1px;
+    margin-left: 150px;
 }
 
 #suggestions #suggestion {

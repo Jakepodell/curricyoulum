@@ -6,11 +6,15 @@ import {render} from 'react-dom';
 /**
  * A single input field, derives its heading, search text, and suggestion items from the field prop.
  * Includes a dropdown of selectable suggestions.
+ * selectable suggestions are displayed as bubbles, either in the same div as the tying or an external div
+ *  this is determined from props
+ *  in order to get the ability to place bubble in the input, the input is actually hidden within an
+ *  external div that is masked to look like the input.
  */
 class Input extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {showsSuggestions: false, inputValue: ""};
+        this.state = {showsSuggestions: false, inputValue: "", selectedItems: []};
         this.handleInputTextChange = this.handleInputTextChange.bind(this);
         this.handleSelectSuggestion = this.handleSelectSuggestion.bind(this);
         this.handleInputFocus = this.handleInputFocus.bind(this);
@@ -38,8 +42,8 @@ class Input extends React.Component {
     }
 
     handleSelectSuggestion(value) {
-        this.setState({inputValue: value.target.innerHTML});
-        this.setState({showsSuggestions: false});
+        this.setState({inputValue: "",
+                        selectedItems: this.state.selectedItems.concat(value.target.innerHTML)});
     }
 
     handleKeyPress(event) {
@@ -52,9 +56,9 @@ class Input extends React.Component {
             this.setState({showsSuggestions: false});
     }
 
-    renderItems() {
+    renderSuggestions() {
         let inputValue = this.state.inputValue;
-        return this.props.items.filter(function(item) {
+        return this.props.suggestions.filter(function(item) {
           return item.toLowerCase().includes(inputValue.toLowerCase()); //see if there is a better way to do this using a regex
         }).map(function(item) {
             return(
@@ -67,25 +71,45 @@ class Input extends React.Component {
         }.bind(this));
     }
 
+    renderInternalBubbles() {
+        if(this.props.internalBubbles) {
+            return this.state.selectedItems.map((item) => {
+                return (
+                    <div id="bubble"> {item} </div>
+                );
+            });
+        }
+    }
+
+    renderInput() {
+        return (
+            <div>
+                <div id = "input-label">
+                    {this.props.field}
+                </div>
+                <div id = "input-container">
+                    {this.renderInternalBubbles()}
+                    <div id = "input-sizer">
+                        <input tabIndex = "0"
+                            onFocus = {this.handleInputFocus}
+                            type="text"
+                            id={this.props.field}
+                            value={this.state.inputValue}
+                            onChange={this.handleInputTextChange}
+                        />
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     render() {
         return (
-            <div id = "input">
-                <form>
-                    {this.props.field}
-                    <br/>
-                    <input tabIndex = "0"
-                        onFocus = {this.handleInputFocus}
-                        type="text"
-                        id={this.props.field}
-                        placeholder= {"e.g. "+this.props.example}
-                        value={this.state.inputValue}
-                        onChange={this.handleInputTextChange}
-                    />
-                </form>
-
+            <div id = "form-element">
+                {this.renderInput()}
                 <table id = "suggestions" className={this.state.showsSuggestions ? "visible" : "hidden"}>
                     <tbody>
-                        {this.renderItems()}
+                        {this.renderSuggestions()}
                     </tbody>
                 </table>
             </div>

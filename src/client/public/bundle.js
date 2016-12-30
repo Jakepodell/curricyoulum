@@ -22141,27 +22141,26 @@
 	                null,
 	                _react2.default.createElement(
 	                    'div',
-	                    { id: 'input-container' },
+	                    { id: 'form-container' },
 	                    _react2.default.createElement(
 	                        'div',
-	                        { id: 'input' },
+	                        { id: 'radio-container' },
 	                        _react2.default.createElement(
-	                            'div',
-	                            { id: 'radio-container' },
-	                            _react2.default.createElement(
-	                                'p',
-	                                { id: 'form_title' },
-	                                'School:'
-	                            ),
-	                            this.renderSchools()
-	                        )
+	                            'p',
+	                            { id: 'form_title' },
+	                            'School:'
+	                        ),
+	                        this.renderSchools()
 	                    ),
 	                    _react2.default.createElement('hr', null),
-	                    _react2.default.createElement(_input2.default, { field: 'Major', example: 'Computer Science', items: _constants2.default.majors }),
-	                    _react2.default.createElement(_input2.default, { field: 'Minor(s)', example: 'Cognitive Science', items: _constants2.default.minors }),
-	                    _react2.default.createElement(_input2.default, { field: 'Classes Taken', example: 'AEM 2940', items: _constants2.default.classesTaken }),
-	                    _react2.default.createElement(_input2.default, { field: 'Graduating Semester', example: 'Spring 2019', items: _constants2.default.graduatingSemester }),
-	                    _react2.default.createElement(_input2.default, { field: 'Desired Classes', example: 'CS 4700', items: _constants2.default.classesDesired })
+	                    _react2.default.createElement(_input2.default, { field: 'Major', example: 'Computer Science', suggestions: _constants2.default.majors, internalBubbles: true }),
+	                    _react2.default.createElement(_input2.default, { field: 'Minor(s)', example: 'Cognitive Science', suggestions: _constants2.default.minors, internalBubbles: true }),
+	                    _react2.default.createElement('hr', null),
+	                    _react2.default.createElement(_input2.default, { field: 'Classes Taken', example: 'AEM 2940', suggestions: _constants2.default.classesTaken, internalBubbles: true }),
+	                    _react2.default.createElement('hr', null),
+	                    _react2.default.createElement(_input2.default, { field: 'Graduating Semester', example: 'Spring 2019', suggestions: _constants2.default.graduatingSemester, internalBubbles: true }),
+	                    _react2.default.createElement('hr', null),
+	                    _react2.default.createElement(_input2.default, { field: 'Desired Classes', example: 'CS 4700', suggestions: _constants2.default.classesDesired, internalBubbles: true })
 	                )
 	            );
 	        }
@@ -22218,6 +22217,10 @@
 	/**
 	 * A single input field, derives its heading, search text, and suggestion items from the field prop.
 	 * Includes a dropdown of selectable suggestions.
+	 * selectable suggestions are displayed as bubbles, either in the same div as the tying or an external div
+	 *  this is determined from props
+	 *  in order to get the ability to place bubble in the input, the input is actually hidden within an
+	 *  external div that is masked to look like the input.
 	 */
 	var Input = function (_React$Component) {
 	    _inherits(Input, _React$Component);
@@ -22227,7 +22230,7 @@
 	
 	        var _this = _possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).call(this, props));
 	
-	        _this.state = { showsSuggestions: false, inputValue: "" };
+	        _this.state = { showsSuggestions: false, inputValue: "", selectedItems: [] };
 	        _this.handleInputTextChange = _this.handleInputTextChange.bind(_this);
 	        _this.handleSelectSuggestion = _this.handleSelectSuggestion.bind(_this);
 	        _this.handleInputFocus = _this.handleInputFocus.bind(_this);
@@ -22262,8 +22265,8 @@
 	    }, {
 	        key: 'handleSelectSuggestion',
 	        value: function handleSelectSuggestion(value) {
-	            this.setState({ inputValue: value.target.innerHTML });
-	            this.setState({ showsSuggestions: false });
+	            this.setState({ inputValue: "",
+	                selectedItems: this.state.selectedItems.concat(value.target.innerHTML) });
 	        }
 	    }, {
 	        key: 'handleKeyPress',
@@ -22277,10 +22280,10 @@
 	            if (event.target.id != this.props.field) this.setState({ showsSuggestions: false });
 	        }
 	    }, {
-	        key: 'renderItems',
-	        value: function renderItems() {
+	        key: 'renderSuggestions',
+	        value: function renderSuggestions() {
 	            var inputValue = this.state.inputValue;
-	            return this.props.items.filter(function (item) {
+	            return this.props.suggestions.filter(function (item) {
 	                return item.toLowerCase().includes(inputValue.toLowerCase()); //see if there is a better way to do this using a regex
 	            }).map(function (item) {
 	                return _react2.default.createElement(
@@ -22295,32 +22298,63 @@
 	            }.bind(this));
 	        }
 	    }, {
+	        key: 'renderInternalBubbles',
+	        value: function renderInternalBubbles() {
+	            if (this.props.internalBubbles) {
+	                return this.state.selectedItems.map(function (item) {
+	                    return _react2.default.createElement(
+	                        'div',
+	                        { id: 'bubble' },
+	                        ' ',
+	                        item,
+	                        ' '
+	                    );
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'renderInput',
+	        value: function renderInput() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'div',
+	                    { id: 'input-label' },
+	                    this.props.field
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { id: 'input-container' },
+	                    this.renderInternalBubbles(),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { id: 'input-sizer' },
+	                        _react2.default.createElement('input', { tabIndex: '0',
+	                            onFocus: this.handleInputFocus,
+	                            type: 'text',
+	                            id: this.props.field,
+	                            value: this.state.inputValue,
+	                            onChange: this.handleInputTextChange
+	                        })
+	                    )
+	                )
+	            );
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                { id: 'input' },
-	                _react2.default.createElement(
-	                    'form',
-	                    null,
-	                    this.props.field,
-	                    _react2.default.createElement('br', null),
-	                    _react2.default.createElement('input', { tabIndex: '0',
-	                        onFocus: this.handleInputFocus,
-	                        type: 'text',
-	                        id: this.props.field,
-	                        placeholder: "e.g. " + this.props.example,
-	                        value: this.state.inputValue,
-	                        onChange: this.handleInputTextChange
-	                    })
-	                ),
+	                { id: 'form-element' },
+	                this.renderInput(),
 	                _react2.default.createElement(
 	                    'table',
 	                    { id: 'suggestions', className: this.state.showsSuggestions ? "visible" : "hidden" },
 	                    _react2.default.createElement(
 	                        'tbody',
 	                        null,
-	                        this.renderItems()
+	                        this.renderSuggestions()
 	                    )
 	                )
 	            );

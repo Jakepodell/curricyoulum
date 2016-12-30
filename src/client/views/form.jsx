@@ -21,19 +21,20 @@ class Form extends React.Component {
     render() {
         return (
             <div>
-                <div id = "input-container">
-                    <div id = "input">
-                        <div id = "radio-container">
-                            <p id = "form_title">School:</p>
-                            {this.renderSchools()}
-                        </div>
+                <div id = "form-container">
+                    <div id = "radio-container">
+                        <p id = "form_title">School:</p>
+                        {this.renderSchools()}
                     </div>
                     <hr/>
-                    <Input field = "Major" example = "Computer Science" items = {Constants.majors} />
-                    <Input field = "Minor(s)" example = "Cognitive Science" items = {Constants.minors} />
-                    <Input field = "Classes Taken" example = "AEM 2940" items = {Constants.classesTaken} />
-                    <Input field = "Graduating Semester" example = "Spring 2019" items = {Constants.graduatingSemester} />
-                    <Input field = "Desired Classes" example = "CS 4700" items = {Constants.classesDesired} />
+                    <Input field = "Major" example = "Computer Science" suggestions = {Constants.majors} internalBubbles = {true} />
+                    <Input field = "Minor(s)" example = "Cognitive Science" suggestions = {Constants.minors} internalBubbles = {true} />
+                    <hr/>
+                    <Input field = "Classes Taken" example = "AEM 2940" suggestions = {Constants.classesTaken} internalBubbles = {true} />
+                    <hr/>
+                    <Input field = "Graduating Semester" example = "Spring 2019" suggestions = {Constants.graduatingSemester} internalBubbles = {true} />
+                    <hr/>
+                    <Input field = "Desired Classes" example = "CS 4700" suggestions = {Constants.classesDesired} internalBubbles = {true} />
                 </div>
             </div>
         );
