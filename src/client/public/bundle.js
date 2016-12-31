@@ -22286,9 +22286,11 @@
 	                    break;
 	                case _constants2.default.keyCodes.UP:
 	                    if (this.state.highlightedIndex >= -1) this.setState({ highlightedIndex: this.state.highlightedIndex - 1 });
+	                    event.preventDefault();
 	                    break;
 	                case _constants2.default.keyCodes.DOWN:
 	                    if (this.state.highlightedIndex < this.state.filteredSuggestions.length - 1) this.setState({ highlightedIndex: this.state.highlightedIndex + 1 });
+	                    event.preventDefault();
 	                    break;
 	                case _constants2.default.keyCodes.ENTER:
 	                    if (this.state.highlightedItem !== "") {
@@ -22340,16 +22342,26 @@
 	    }, {
 	        key: 'renderInternalBubbles',
 	        value: function renderInternalBubbles() {
+	            var _this3 = this;
+	
 	            if (this.props.internalBubbles) {
 	                return this.state.selectedItems.map(function (item, index) {
 	                    return _react2.default.createElement(
 	                        'div',
 	                        { id: 'bubble', key: index },
-	                        ' ',
-	                        item,
-	                        ' '
+	                        _react2.default.createElement('img', { src: 'https://cdn3.iconfinder.com/data/icons/meanicons-4/512/meanicons_24-512.png', id: 'bubble-delete', onClick: _this3.deleteBubble.bind(_this3, item) }),
+	                        item
 	                    );
 	                });
+	            }
+	        }
+	    }, {
+	        key: 'deleteBubble',
+	        value: function deleteBubble(item) {
+	            var newItems = this.state.selectedItems;
+	            if (newItems.indexOf(item) > -1) {
+	                newItems.splice(newItems.indexOf(item), 1);
+	                this.setState({ selectedItems: newItems });
 	            }
 	        }
 	    }, {

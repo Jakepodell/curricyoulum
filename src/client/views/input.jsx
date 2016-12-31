@@ -59,10 +59,12 @@ class Input extends React.Component {
             case Constants.keyCodes.UP:
                 if(this.state.highlightedIndex >= -1)
                     this.setState({highlightedIndex: this.state.highlightedIndex - 1});
+                event.preventDefault();
                 break;
             case Constants.keyCodes.DOWN:
                 if(this.state.highlightedIndex < this.state.filteredSuggestions.length - 1)
                     this.setState({highlightedIndex: this.state.highlightedIndex + 1});
+                event.preventDefault();
                 break;
             case Constants.keyCodes.ENTER:
                 if(this.state.highlightedItem !== "") {
@@ -109,9 +111,20 @@ class Input extends React.Component {
         if(this.props.internalBubbles) {
             return this.state.selectedItems.map((item, index) => {
                 return (
-                    <div id="bubble" key = {index}> {item} </div>
+                    <div id="bubble" key = {index}>
+                        <img src = "https://cdn3.iconfinder.com/data/icons/meanicons-4/512/meanicons_24-512.png" id = "bubble-delete" onClick={this.deleteBubble.bind(this, item)} />
+                        {item}
+                    </div>
                 );
             });
+        }
+    }
+
+    deleteBubble(item) {
+        const newItems = this.state.selectedItems;
+        if(newItems.indexOf(item) > -1) {
+            newItems.splice(newItems.indexOf(item), 1);
+            this.setState({selectedItems: newItems});
         }
     }
 
