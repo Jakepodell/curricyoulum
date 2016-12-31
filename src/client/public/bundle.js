@@ -22153,14 +22153,14 @@
 	                        this.renderSchools()
 	                    ),
 	                    _react2.default.createElement('hr', null),
-	                    _react2.default.createElement(_input2.default, { field: 'Major', example: 'Computer Science', suggestions: _constants2.default.majors, internalBubbles: true }),
-	                    _react2.default.createElement(_input2.default, { field: 'Minor(s)', example: 'Cognitive Science', suggestions: _constants2.default.minors, internalBubbles: true }),
+	                    _react2.default.createElement(_input2.default, { field: 'Major:', example: 'Computer Science', suggestions: _constants2.default.majors, internalBubbles: true }),
+	                    _react2.default.createElement(_input2.default, { field: 'Minor(s):', example: 'Cognitive Science', suggestions: _constants2.default.minors, internalBubbles: true, align: 'right' }),
 	                    _react2.default.createElement('hr', null),
-	                    _react2.default.createElement(_input2.default, { field: 'Classes Taken', example: 'AEM 2940', suggestions: _constants2.default.classesTaken, internalBubbles: true }),
+	                    _react2.default.createElement(_input2.default, { field: 'Classes Taken:', example: 'AEM 2940', suggestions: _constants2.default.classesTaken }),
 	                    _react2.default.createElement('hr', null),
-	                    _react2.default.createElement(_input2.default, { field: 'Graduating Semester', example: 'Spring 2019', suggestions: _constants2.default.graduatingSemester, internalBubbles: true }),
+	                    _react2.default.createElement(_input2.default, { field: 'Graduating Semester:', example: 'Spring 2019', suggestions: _constants2.default.graduatingSemester }),
 	                    _react2.default.createElement('hr', null),
-	                    _react2.default.createElement(_input2.default, { field: 'Desired Classes', example: 'CS 4700', suggestions: _constants2.default.classesDesired, internalBubbles: true })
+	                    _react2.default.createElement(_input2.default, { field: 'Desired Classes:', example: 'CS 4700', suggestions: _constants2.default.classesDesired })
 	                )
 	            );
 	        }
@@ -22305,7 +22305,7 @@
 	    }, {
 	        key: 'handleWindowClick',
 	        value: function handleWindowClick(event) {
-	            if (event.target.id != this.props.field) this.hideSuggestions();
+	            if (event.target.id != this.props.field && event.target.id !== "suggestion-td") this.hideSuggestions();
 	        }
 	    }, {
 	        key: 'hideSuggestions',
@@ -22353,73 +22353,85 @@
 	                        'td',
 	                        { onClick: this.handleSelectSuggestion, onMouseMove: function onMouseMove(e) {
 	                                return _this2.setState({ highlightedIndex: index });
-	                            }, key: index },
+	                            }, key: index, id: "suggestion-td" },
 	                        item
 	                    )
 	                );
 	            }.bind(this));
 	        }
 	    }, {
-	        key: 'renderInternalBubbles',
-	        value: function renderInternalBubbles() {
+	        key: 'renderBubbles',
+	        value: function renderBubbles() {
 	            var _this3 = this;
 	
+	            return this.state.selectedItems.map(function (item, index) {
+	                return _react2.default.createElement(
+	                    'div',
+	                    { id: 'bubble', key: index },
+	                    _react2.default.createElement('img', { src: 'https://cdn3.iconfinder.com/data/icons/meanicons-4/512/meanicons_24-512.png', id: 'bubble-delete', onClick: _this3.deleteBubble.bind(_this3, item) }),
+	                    item
+	                );
+	            });
+	        }
+	    }, {
+	        key: 'renderInternalBubbles',
+	        value: function renderInternalBubbles() {
 	            if (this.props.internalBubbles) {
-	                return this.state.selectedItems.map(function (item, index) {
-	                    return _react2.default.createElement(
-	                        'div',
-	                        { id: 'bubble', key: index },
-	                        _react2.default.createElement('img', { src: 'https://cdn3.iconfinder.com/data/icons/meanicons-4/512/meanicons_24-512.png', id: 'bubble-delete', onClick: _this3.deleteBubble.bind(_this3, item) }),
-	                        item
-	                    );
-	                });
+	                return this.renderBubbles();
 	            }
 	        }
 	    }, {
-	        key: 'renderInput',
-	        value: function renderInput() {
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(
+	        key: 'renderExternalBubbles',
+	        value: function renderExternalBubbles() {
+	            if (!this.props.internalBubbles) {
+	                return _react2.default.createElement(
 	                    'div',
-	                    { id: 'input-label' },
-	                    this.props.field
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { id: 'input-container' },
-	                    this.renderInternalBubbles(),
-	                    _react2.default.createElement(
-	                        'div',
-	                        { id: 'input-sizer' },
-	                        _react2.default.createElement('input', { tabIndex: '0',
-	                            onFocus: this.handleInputFocus,
-	                            type: 'text',
-	                            id: this.props.field,
-	                            value: this.state.inputValue,
-	                            onChange: this.handleInputTextChange
-	                        })
-	                    )
-	                )
-	            );
+	                    { id: 'external-bubble-container' },
+	                    this.renderBubbles()
+	                );
+	            };
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                { id: 'form-element' },
-	                this.renderInput(),
+	                { className: (this.props.internalBubbles ? "internal-bubbles" : "external-bubbles") + " " + (this.props.align === "right" ? "right-align" : "") },
 	                _react2.default.createElement(
-	                    'table',
-	                    { id: 'suggestions', className: this.state.showsSuggestions ? "visible" : "hidden" },
+	                    'div',
+	                    { id: 'input-component' },
 	                    _react2.default.createElement(
-	                        'tbody',
-	                        null,
-	                        this.renderSuggestions()
+	                        'div',
+	                        { id: 'input-label' },
+	                        this.props.field
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { id: 'input-container' },
+	                        this.renderInternalBubbles(),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { id: 'input-sizer' },
+	                            _react2.default.createElement('input', { tabIndex: '0',
+	                                onFocus: this.handleInputFocus,
+	                                type: 'text',
+	                                id: this.props.field,
+	                                value: this.state.inputValue,
+	                                onChange: this.handleInputTextChange
+	                            })
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'table',
+	                        { id: 'suggestions', className: this.state.showsSuggestions ? "visible" : "hidden" },
+	                        _react2.default.createElement(
+	                            'tbody',
+	                            null,
+	                            this.renderSuggestions()
+	                        )
 	                    )
-	                )
+	                ),
+	                this.renderExternalBubbles()
 	            );
 	        }
 	    }]);

@@ -78,7 +78,7 @@ class Input extends React.Component {
     }
 
     handleWindowClick(event) {
-        if(event.target.id != this.props.field)
+        if(event.target.id != this.props.field && event.target.id !== "suggestion-td")
             this.hideSuggestions();
     }
 
@@ -114,7 +114,7 @@ class Input extends React.Component {
             return(
                 <tr id = "suggestion" key = {index} className={this.state.highlightedIndex == index ? "focused" : "unfocused"}
                     ref={(input) => {this.calculateHighlightedItemText(input, item, index)}}>
-                    <td onClick={this.handleSelectSuggestion} onMouseMove={(e) => this.setState({highlightedIndex: index})} key={index}>
+                    <td onClick={this.handleSelectSuggestion} onMouseMove={(e) => this.setState({highlightedIndex: index})} key={index} id = {"suggestion-td"}>
                         {item}
                     </td>
                 </tr>
@@ -122,52 +122,60 @@ class Input extends React.Component {
         }.bind(this));
     }
 
+    renderBubbles() {
+        return this.state.selectedItems.map((item, index) => {
+            return (
+                <div id="bubble" key = {index}>
+                    <img src = "https://cdn3.iconfinder.com/data/icons/meanicons-4/512/meanicons_24-512.png" id = "bubble-delete" onClick={this.deleteBubble.bind(this, item)} />
+                    {item}
+                </div>
+            );
+        });
+    }
+
     renderInternalBubbles() {
         if(this.props.internalBubbles) {
-            return this.state.selectedItems.map((item, index) => {
-                return (
-                    <div id="bubble" key = {index}>
-                        <img src = "https://cdn3.iconfinder.com/data/icons/meanicons-4/512/meanicons_24-512.png" id = "bubble-delete" onClick={this.deleteBubble.bind(this, item)} />
-                        {item}
-                    </div>
-                );
-            });
+            return this.renderBubbles();
         }
     }
 
-    renderInput() {
-        return (
-            <div>
-                <div id = "input-label">
-                    {this.props.field}
+    renderExternalBubbles() {
+        if(!this.props.internalBubbles) {
+            return (
+                <div id = "external-bubble-container">
+                    {this.renderBubbles()}
                 </div>
-                <div id = "input-container">
-                    {this.renderInternalBubbles()}
-                    <div id = "input-sizer">
-                        <input tabIndex = "0"
-                            onFocus = {this.handleInputFocus}
-                            type="text"
-                            id={this.props.field}
-                            value={this.state.inputValue}
-                            onChange={this.handleInputTextChange}
-                        />
-                    </div>
-                </div>
-            </div>
-        );
+            );
+        };
     }
 
     render() {
         return (
-            <div id = "form-element">
-                {this.renderInput()}
-                <table id = "suggestions" className={this.state.showsSuggestions ? "visible" : "hidden"}>
-                    <tbody>
-                        {this.renderSuggestions()}
-                    </tbody>
-                </table>
+            <div className={(this.props.internalBubbles ? "internal-bubbles" : "external-bubbles") + " " + (this.props.align === "right" ? "right-align" : "")} >
+                <div id = "input-component">
+                    <div id = "input-label">
+                        {this.props.field}
+                    </div>
+                    <div id = "input-container">
+                        {this.renderInternalBubbles()}
+                        <div id = "input-sizer">
+                            <input tabIndex = "0"
+                                   onFocus = {this.handleInputFocus}
+                                   type="text"
+                                   id={this.props.field}
+                                   value={this.state.inputValue}
+                                   onChange={this.handleInputTextChange}
+                            />
+                        </div>
+                    </div>
+                    <table id = "suggestions" className={this.state.showsSuggestions ? "visible" : "hidden"}>
+                        <tbody>
+                            {this.renderSuggestions()}
+                        </tbody>
+                    </table>
+                </div>
+                {this.renderExternalBubbles()}
             </div>
-
         );
     }
 }

@@ -27,14 +27,14 @@ class Form extends React.Component {
                         {this.renderSchools()}
                     </div>
                     <hr/>
-                    <Input field = "Major" example = "Computer Science" suggestions = {Constants.majors} internalBubbles = {true} />
-                    <Input field = "Minor(s)" example = "Cognitive Science" suggestions = {Constants.minors} internalBubbles = {true} />
+                    <Input field = "Major:" example = "Computer Science" suggestions = {Constants.majors} internalBubbles = {true} />
+                    <Input field = "Minor(s):" example = "Cognitive Science" suggestions = {Constants.minors} internalBubbles = {true} align = "right"/>
                     <hr/>
-                    <Input field = "Classes Taken" example = "AEM 2940" suggestions = {Constants.classesTaken} internalBubbles = {true} />
+                    <Input field = "Classes Taken:" example = "AEM 2940" suggestions = {Constants.classesTaken} />
                     <hr/>
-                    <Input field = "Graduating Semester" example = "Spring 2019" suggestions = {Constants.graduatingSemester} internalBubbles = {true} />
+                    <Input field = "Graduating Semester:" example = "Spring 2019" suggestions = {Constants.graduatingSemester} />
                     <hr/>
-                    <Input field = "Desired Classes" example = "CS 4700" suggestions = {Constants.classesDesired} internalBubbles = {true} />
+                    <Input field = "Desired Classes:" example = "CS 4700" suggestions = {Constants.classesDesired} />
                 </div>
             </form>
         );
