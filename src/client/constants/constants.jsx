@@ -42,5 +42,11 @@ module.exports = {
         "Spring 2018",
         "Fall 2018",
         "Spring 2019",
-    ]
+    ],
+    keyCodes: {
+        ESC: 27,
+        UP: 38,
+        DOWN: 40,
+        ENTER: 13,
+    },
 }

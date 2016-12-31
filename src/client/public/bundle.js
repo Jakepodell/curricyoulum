@@ -22137,8 +22137,8 @@
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                'div',
-	                null,
+	                'form',
+	                { autoComplete: 'off' },
 	                _react2.default.createElement(
 	                    'div',
 	                    { id: 'form-container' },
@@ -22204,6 +22204,10 @@
 	
 	var _reactDom = __webpack_require__(/*! react-dom */ 182);
 	
+	var _constants = __webpack_require__(/*! ../constants/constants.jsx */ 202);
+	
+	var _constants2 = _interopRequireDefault(_constants);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -22230,7 +22234,7 @@
 	
 	        var _this = _possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).call(this, props));
 	
-	        _this.state = { showsSuggestions: false, inputValue: "", selectedItems: [] };
+	        _this.state = { showsSuggestions: false, inputValue: "", selectedItems: [], highlightedIndex: -1, highlightedItemText: "", filteredSuggestions: [] };
 	        _this.handleInputTextChange = _this.handleInputTextChange.bind(_this);
 	        _this.handleSelectSuggestion = _this.handleSelectSuggestion.bind(_this);
 	        _this.handleInputFocus = _this.handleInputFocus.bind(_this);
@@ -22260,19 +22264,40 @@
 	        key: 'handleInputTextChange',
 	        value: function handleInputTextChange(event) {
 	            this.setState({ showsSuggestions: event.target.value.length > 0,
-	                inputValue: event.target.value });
+	                inputValue: event.target.value }, this.filterSuggestions);
 	        }
 	    }, {
 	        key: 'handleSelectSuggestion',
 	        value: function handleSelectSuggestion(value) {
-	            this.setState({ inputValue: "",
-	                selectedItems: this.state.selectedItems.concat(value.target.innerHTML) });
+	            this.selectSuggestion(value.target.innerHTML);
+	        }
+	    }, {
+	        key: 'selectSuggestion',
+	        value: function selectSuggestion(value) {
+	            this.setState({ selectedItems: this.state.selectedItems.concat(value), highlightedIndex: -1 });
 	        }
 	    }, {
 	        key: 'handleKeyPress',
 	        value: function handleKeyPress(event) {
-	            if (event.keyCode == 27) //escape key
-	                this.setState({ showsSuggestions: false });
+	            if (!this.state.showsSuggestions) return;
+	            switch (event.keyCode) {
+	                case _constants2.default.keyCodes.ESC:
+	                    this.setState({ showsSuggestions: false });
+	                    break;
+	                case _constants2.default.keyCodes.UP:
+	                    if (this.state.highlightedIndex >= -1) this.setState({ highlightedIndex: this.state.highlightedIndex - 1 });
+	                    break;
+	                case _constants2.default.keyCodes.DOWN:
+	                    if (this.state.highlightedIndex < this.state.filteredSuggestions.length - 1) this.setState({ highlightedIndex: this.state.highlightedIndex + 1 });
+	                    break;
+	                case _constants2.default.keyCodes.ENTER:
+	                    if (this.state.highlightedItem !== "") {
+	                        this.selectSuggestion(this.state.highlightedItemText);
+	                        break;
+	                    }
+	                default:
+	                    break;
+	            }
 	        }
 	    }, {
 	        key: 'handleWindowClick',
@@ -22280,18 +22305,33 @@
 	            if (event.target.id != this.props.field) this.setState({ showsSuggestions: false });
 	        }
 	    }, {
+	        key: 'filterSuggestions',
+	        value: function filterSuggestions() {
+	            var inputValue = this.state.inputValue;
+	            this.setState({ filteredSuggestions: this.props.suggestions.filter(function (item) {
+	                    return item.toLowerCase().includes(inputValue.toLowerCase());
+	                })
+	            });
+	        }
+	    }, {
 	        key: 'renderSuggestions',
 	        value: function renderSuggestions() {
-	            var inputValue = this.state.inputValue;
-	            return this.props.suggestions.filter(function (item) {
-	                return item.toLowerCase().includes(inputValue.toLowerCase()); //see if there is a better way to do this using a regex
-	            }).map(function (item) {
+	            return this.state.filteredSuggestions.map(function (item, index) {
+	                var _this2 = this;
+	
 	                return _react2.default.createElement(
 	                    'tr',
-	                    { id: 'suggestion', key: item },
+	                    { id: 'suggestion', key: index, className: this.state.highlightedIndex == index ? "focused" : "unfocused",
+	                        ref: function ref(input) {
+	                            if (_this2.state.highlightedIndex == index && _this2.state.showsSuggestions && input != null && _this2.state.highlightedItemText !== item) {
+	                                _this2.setState({ highlightedItemText: item });
+	                            }
+	                        } },
 	                    _react2.default.createElement(
 	                        'td',
-	                        { onClick: this.handleSelectSuggestion, key: 'fdf' },
+	                        { onClick: this.handleSelectSuggestion, onMouseMove: function onMouseMove(e) {
+	                                return _this2.setState({ highlightedIndex: index });
+	                            }, key: index },
 	                        item
 	                    )
 	                );
@@ -22301,10 +22341,10 @@
 	        key: 'renderInternalBubbles',
 	        value: function renderInternalBubbles() {
 	            if (this.props.internalBubbles) {
-	                return this.state.selectedItems.map(function (item) {
+	                return this.state.selectedItems.map(function (item, index) {
 	                    return _react2.default.createElement(
 	                        'div',
-	                        { id: 'bubble' },
+	                        { id: 'bubble', key: index },
 	                        ' ',
 	                        item,
 	                        ' '
@@ -24741,7 +24781,13 @@
 	    minors: ["Computer Science", "Hotel Things", "Economics", "Accounting", "Applied and Engineering Physics", "Art History", "Basket Weaving"],
 	    classesTaken: ["AEM 2540", "CS 4780", "ECE 3210", "MATH 2930"],
 	    classesDesired: ["AEM 2540", "CS 4780", "ECE 3210", "MATH 2930"],
-	    graduatingSemester: ["Spring 2017", "Fall 2017", "Spring 2018", "Fall 2018", "Spring 2019"]
+	    graduatingSemester: ["Spring 2017", "Fall 2017", "Spring 2018", "Fall 2018", "Spring 2019"],
+	    keyCodes: {
+	        ESC: 27,
+	        UP: 38,
+	        DOWN: 40,
+	        ENTER: 13
+	    }
 	};
 
 /***/ }

@@ -20,7 +20,7 @@ class Form extends React.Component {
 
     render() {
         return (
-            <div>
+            <form autoComplete="off">
                 <div id = "form-container">
                     <div id = "radio-container">
                         <p id = "form_title">School:</p>
@@ -36,7 +36,7 @@ class Form extends React.Component {
                     <hr/>
                     <Input field = "Desired Classes" example = "CS 4700" suggestions = {Constants.classesDesired} internalBubbles = {true} />
                 </div>
-            </div>
+            </form>
         );
     }
 }

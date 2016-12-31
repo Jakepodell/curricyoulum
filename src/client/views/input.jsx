@@ -1,5 +1,6 @@
 import React from 'react';
 import {render} from 'react-dom';
+import Constants from '../constants/constants.jsx';
 
 //----------------------INPUT--------------------------------------------
 
@@ -14,7 +15,7 @@ import {render} from 'react-dom';
 class Input extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {showsSuggestions: false, inputValue: "", selectedItems: []};
+        this.state = {showsSuggestions: false, inputValue: "", selectedItems: [], highlightedIndex: -1, highlightedItemText: "", filteredSuggestions: []};
         this.handleInputTextChange = this.handleInputTextChange.bind(this);
         this.handleSelectSuggestion = this.handleSelectSuggestion.bind(this);
         this.handleInputFocus = this.handleInputFocus.bind(this);
@@ -38,17 +39,39 @@ class Input extends React.Component {
 
     handleInputTextChange(event) {
         this.setState({showsSuggestions: event.target.value.length > 0,
-                        inputValue: event.target.value});
+                        inputValue: event.target.value}, this.filterSuggestions);
     }
 
     handleSelectSuggestion(value) {
-        this.setState({inputValue: "",
-                        selectedItems: this.state.selectedItems.concat(value.target.innerHTML)});
+        this.selectSuggestion(value.target.innerHTML);
+    }
+
+    selectSuggestion(value) {
+        this.setState({selectedItems: this.state.selectedItems.concat(value), highlightedIndex: -1});
     }
 
     handleKeyPress(event) {
-        if(event.keyCode == 27) //escape key
-            this.setState({showsSuggestions: false});
+        if(!this.state.showsSuggestions)return;
+        switch(event.keyCode) {
+            case Constants.keyCodes.ESC:
+                this.setState({showsSuggestions: false});
+                break;
+            case Constants.keyCodes.UP:
+                if(this.state.highlightedIndex >= -1)
+                    this.setState({highlightedIndex: this.state.highlightedIndex - 1});
+                break;
+            case Constants.keyCodes.DOWN:
+                if(this.state.highlightedIndex < this.state.filteredSuggestions.length - 1)
+                    this.setState({highlightedIndex: this.state.highlightedIndex + 1});
+                break;
+            case Constants.keyCodes.ENTER:
+                if(this.state.highlightedItem !== "") {
+                    this.selectSuggestion(this.state.highlightedItemText);
+                    break;
+                }
+            default:
+                break;
+        }
     }
 
     handleWindowClick(event) {
@@ -56,14 +79,25 @@ class Input extends React.Component {
             this.setState({showsSuggestions: false});
     }
 
-    renderSuggestions() {
+    filterSuggestions() {
         let inputValue = this.state.inputValue;
-        return this.props.suggestions.filter(function(item) {
-          return item.toLowerCase().includes(inputValue.toLowerCase()); //see if there is a better way to do this using a regex
-        }).map(function(item) {
+        this.setState({filteredSuggestions:
+            this.props.suggestions.filter(function(item) {
+                return item.toLowerCase().includes(inputValue.toLowerCase());
+            })
+        });
+    }
+
+    renderSuggestions() {
+        return this.state.filteredSuggestions.map(function(item, index) {
             return(
-                <tr id = "suggestion" key = {item} >
-                    <td onClick={this.handleSelectSuggestion} key="fdf">
+                <tr id = "suggestion" key = {index} className={this.state.highlightedIndex == index ? "focused" : "unfocused"}
+                    ref={(input) => {
+                        if(this.state.highlightedIndex == index && this.state.showsSuggestions && input != null && this.state.highlightedItemText !== item) {
+                            this.setState({highlightedItemText: item});
+                        }
+                    }}>
+                    <td onClick={this.handleSelectSuggestion} onMouseMove={(e) => this.setState({highlightedIndex: index})} key={index}>
                         {item}
                     </td>
                 </tr>
@@ -73,9 +107,9 @@ class Input extends React.Component {
 
     renderInternalBubbles() {
         if(this.props.internalBubbles) {
-            return this.state.selectedItems.map((item) => {
+            return this.state.selectedItems.map((item, index) => {
                 return (
-                    <div id="bubble"> {item} </div>
+                    <div id="bubble" key = {index}> {item} </div>
                 );
             });
         }
