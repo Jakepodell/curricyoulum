@@ -22240,6 +22240,7 @@
 	        _this.handleInputFocus = _this.handleInputFocus.bind(_this);
 	        _this.handleKeyPress = _this.handleKeyPress.bind(_this);
 	        _this.handleWindowClick = _this.handleWindowClick.bind(_this);
+	        _this.calculateHighlightedItemText = _this.calculateHighlightedItemText.bind(_this);
 	        return _this;
 	    }
 	
@@ -22282,7 +22283,7 @@
 	            if (!this.state.showsSuggestions) return;
 	            switch (event.keyCode) {
 	                case _constants2.default.keyCodes.ESC:
-	                    this.setState({ showsSuggestions: false });
+	                    this.hideSuggestions();
 	                    break;
 	                case _constants2.default.keyCodes.UP:
 	                    if (this.state.highlightedIndex >= -1) this.setState({ highlightedIndex: this.state.highlightedIndex - 1 });
@@ -22304,7 +22305,12 @@
 	    }, {
 	        key: 'handleWindowClick',
 	        value: function handleWindowClick(event) {
-	            if (event.target.id != this.props.field) this.setState({ showsSuggestions: false });
+	            if (event.target.id != this.props.field) this.hideSuggestions();
+	        }
+	    }, {
+	        key: 'hideSuggestions',
+	        value: function hideSuggestions() {
+	            this.setState({ showsSuggestions: false, inputValue: "", highlightedIndex: -1, highlightedItemText: "" });
 	        }
 	    }, {
 	        key: 'filterSuggestions',
@@ -22316,6 +22322,22 @@
 	            });
 	        }
 	    }, {
+	        key: 'calculateHighlightedItemText',
+	        value: function calculateHighlightedItemText(input, item, index) {
+	            if (this.state.highlightedIndex == index && this.state.showsSuggestions && this.state.highlightedItemText !== item) {
+	                this.setState({ highlightedItemText: item });
+	            }
+	        }
+	    }, {
+	        key: 'deleteBubble',
+	        value: function deleteBubble(item) {
+	            var newItems = this.state.selectedItems;
+	            if (newItems.indexOf(item) > -1) {
+	                newItems.splice(newItems.indexOf(item), 1);
+	                this.setState({ selectedItems: newItems });
+	            }
+	        }
+	    }, {
 	        key: 'renderSuggestions',
 	        value: function renderSuggestions() {
 	            return this.state.filteredSuggestions.map(function (item, index) {
@@ -22325,9 +22347,7 @@
 	                    'tr',
 	                    { id: 'suggestion', key: index, className: this.state.highlightedIndex == index ? "focused" : "unfocused",
 	                        ref: function ref(input) {
-	                            if (_this2.state.highlightedIndex == index && _this2.state.showsSuggestions && input != null && _this2.state.highlightedItemText !== item) {
-	                                _this2.setState({ highlightedItemText: item });
-	                            }
+	                            _this2.calculateHighlightedItemText(input, item, index);
 	                        } },
 	                    _react2.default.createElement(
 	                        'td',
@@ -22353,15 +22373,6 @@
 	                        item
 	                    );
 	                });
-	            }
-	        }
-	    }, {
-	        key: 'deleteBubble',
-	        value: function deleteBubble(item) {
-	            var newItems = this.state.selectedItems;
-	            if (newItems.indexOf(item) > -1) {
-	                newItems.splice(newItems.indexOf(item), 1);
-	                this.setState({ selectedItems: newItems });
 	            }
 	        }
 	    }, {

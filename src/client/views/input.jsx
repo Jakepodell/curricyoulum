@@ -21,6 +21,7 @@ class Input extends React.Component {
         this.handleInputFocus = this.handleInputFocus.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
         this.handleWindowClick = this.handleWindowClick.bind(this);
+        this.calculateHighlightedItemText = this.calculateHighlightedItemText.bind(this);
     }
 
     componentWillMount() {
@@ -54,7 +55,7 @@ class Input extends React.Component {
         if(!this.state.showsSuggestions)return;
         switch(event.keyCode) {
             case Constants.keyCodes.ESC:
-                this.setState({showsSuggestions: false});
+                this.hideSuggestions();
                 break;
             case Constants.keyCodes.UP:
                 if(this.state.highlightedIndex >= -1)
@@ -78,7 +79,11 @@ class Input extends React.Component {
 
     handleWindowClick(event) {
         if(event.target.id != this.props.field)
-            this.setState({showsSuggestions: false});
+            this.hideSuggestions();
+    }
+
+    hideSuggestions() {
+        this.setState({showsSuggestions: false, inputValue: "", highlightedIndex: -1, highlightedItemText: ""});
     }
 
     filterSuggestions() {
@@ -90,15 +95,25 @@ class Input extends React.Component {
         });
     }
 
+    calculateHighlightedItemText(input, item, index) {
+        if(this.state.highlightedIndex == index && this.state.showsSuggestions && this.state.highlightedItemText !== item) {
+            this.setState({highlightedItemText: item});
+        }
+    }
+
+    deleteBubble(item) {
+        const newItems = this.state.selectedItems;
+        if(newItems.indexOf(item) > -1) {
+            newItems.splice(newItems.indexOf(item), 1);
+            this.setState({selectedItems: newItems});
+        }
+    }
+
     renderSuggestions() {
         return this.state.filteredSuggestions.map(function(item, index) {
             return(
                 <tr id = "suggestion" key = {index} className={this.state.highlightedIndex == index ? "focused" : "unfocused"}
-                    ref={(input) => {
-                        if(this.state.highlightedIndex == index && this.state.showsSuggestions && input != null && this.state.highlightedItemText !== item) {
-                            this.setState({highlightedItemText: item});
-                        }
-                    }}>
+                    ref={(input) => {this.calculateHighlightedItemText(input, item, index)}}>
                     <td onClick={this.handleSelectSuggestion} onMouseMove={(e) => this.setState({highlightedIndex: index})} key={index}>
                         {item}
                     </td>
@@ -117,14 +132,6 @@ class Input extends React.Component {
                     </div>
                 );
             });
-        }
-    }
-
-    deleteBubble(item) {
-        const newItems = this.state.selectedItems;
-        if(newItems.indexOf(item) > -1) {
-            newItems.splice(newItems.indexOf(item), 1);
-            this.setState({selectedItems: newItems});
         }
     }
 
