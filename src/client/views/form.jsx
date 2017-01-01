@@ -44,7 +44,7 @@ class Form extends React.Component {
 
     render() {
         return (
-            <form autoComplete="off">
+            <form autoComplete="off" id = "form">
                 <div id = "form-container">
                     <div id = "radio-container">
                         <p id = "form_title">School:</p>
@@ -63,6 +63,7 @@ class Form extends React.Component {
                         {this.renderSemesters()}
                     </div>
                 </div>
+                <input id = "submit" type="submit" value = "Submit"/>
             </form>
         );
     }

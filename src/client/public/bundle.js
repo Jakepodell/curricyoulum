@@ -22170,7 +22170,7 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'form',
-	                { autoComplete: 'off' },
+	                { autoComplete: 'off', id: 'form' },
 	                _react2.default.createElement(
 	                    'div',
 	                    { id: 'form-container' },
@@ -22202,7 +22202,8 @@
 	                        ),
 	                        this.renderSemesters()
 	                    )
-	                )
+	                ),
+	                _react2.default.createElement('input', { id: 'submit', type: 'submit', value: 'Submit' })
 	            );
 	        }
 	    }]);
@@ -22316,11 +22317,12 @@
 	    }, {
 	        key: 'selectSuggestion',
 	        value: function selectSuggestion(value) {
-	            this.setState({ selectedItems: this.state.selectedItems.concat(value), highlightedIndex: -1 });
+	            this.setState({ selectedItems: this.state.selectedItems.concat(value) });
 	        }
 	    }, {
 	        key: 'handleKeyPress',
 	        value: function handleKeyPress(event) {
+	            if (event.keyCode == _constants2.default.keyCodes.ENTER) event.preventDefault();
 	            if (!this.state.showsSuggestions) return;
 	            switch (event.keyCode) {
 	                case _constants2.default.keyCodes.ESC:
@@ -22335,10 +22337,11 @@
 	                    event.preventDefault();
 	                    break;
 	                case _constants2.default.keyCodes.ENTER:
-	                    if (this.state.highlightedItem !== "") {
-	                        this.selectSuggestion(this.state.highlightedItemText);
-	                        break;
-	                    }
+	                    if (this.state.highlightedItem !== "") this.selectSuggestion(this.state.highlightedItemText);
+	                    break;
+	                case _constants2.default.keyCodes.TAB:
+	                    this.hideSuggestions();
+	                    break;
 	                default:
 	                    break;
 	            }
@@ -24794,7 +24797,8 @@
 	        ESC: 27,
 	        UP: 38,
 	        DOWN: 40,
-	        ENTER: 13
+	        ENTER: 13,
+	        TAB: 9
 	    },
 	    semesterYears: [16, 17, 18, 19]
 	};
