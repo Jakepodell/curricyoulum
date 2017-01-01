@@ -1,7 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import Input from './input.jsx';
-import RadioImage from './radio-image.jsx';
+import RadioImage from './radio-component.jsx';
 import Constants from '../constants/constants.jsx';
 
 /**
@@ -14,8 +14,32 @@ class Form extends React.Component {
 
     renderSchools() {
         return Constants.schools.map((school) => {
-            return <RadioImage key = {school.title} img ={school.img} title = {school.title} name = "schools" onSelectSchool = {this.props.onSelectSchool} />
+            return <RadioImage key = {school.title} clickable = {<img src={school.img} onClick={this.props.onSelectSchool.bind(this, school.title)}/>} title = {school.title} name = "schools" />
         });
+    }
+
+    renderSemesters() {
+        return Constants.semesterYears.map((year) => {
+            return (
+              <div id = "semesters-container" key = {year}>
+                  <RadioImage clickable = {this.renderSemester("fall", year)} title = "" name = "semesters" />
+                  <RadioImage clickable = {this.renderSemester("spring", year)} title = "" name = "semesters" />
+              </div>
+            );
+        });
+    }
+
+    renderSemester(season, year) {
+        return(
+          <div id = "semester">
+              <div id = "season" className = {season}>
+                  {season.toUpperCase()}
+              </div>
+              <div id = "year" className = {season}>
+                  {"'"+year}
+              </div>
+          </div>
+        );
     }
 
     render() {
@@ -32,9 +56,12 @@ class Form extends React.Component {
                     <hr/>
                     <Input field = "Classes Taken:" example = "AEM 2940" suggestions = {Constants.classesTaken} />
                     <hr/>
-                    <Input field = "Graduating Semester:" example = "Spring 2019" suggestions = {Constants.graduatingSemester} />
-                    <hr/>
                     <Input field = "Desired Classes:" example = "CS 4700" suggestions = {Constants.classesDesired} />
+                    <hr/>
+                    <div id = "radio-container">
+                        <p id = "form_title">Graduating Semester:</p>
+                        {this.renderSemesters()}
+                    </div>
                 </div>
             </form>
         );

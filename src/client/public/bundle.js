@@ -22096,9 +22096,9 @@
 	
 	var _input2 = _interopRequireDefault(_input);
 	
-	var _radioImage = __webpack_require__(/*! ./radio-image.jsx */ 184);
+	var _radioComponent = __webpack_require__(/*! ./radio-component.jsx */ 203);
 	
-	var _radioImage2 = _interopRequireDefault(_radioImage);
+	var _radioComponent2 = _interopRequireDefault(_radioComponent);
 	
 	var _constants = __webpack_require__(/*! ../constants/constants.jsx */ 202);
 	
@@ -22130,8 +22130,40 @@
 	            var _this2 = this;
 	
 	            return _constants2.default.schools.map(function (school) {
-	                return _react2.default.createElement(_radioImage2.default, { key: school.title, img: school.img, title: school.title, name: 'schools', onSelectSchool: _this2.props.onSelectSchool });
+	                return _react2.default.createElement(_radioComponent2.default, { key: school.title, clickable: _react2.default.createElement('img', { src: school.img, onClick: _this2.props.onSelectSchool.bind(_this2, school.title) }), title: school.title, name: 'schools' });
 	            });
+	        }
+	    }, {
+	        key: 'renderSemesters',
+	        value: function renderSemesters() {
+	            var _this3 = this;
+	
+	            return _constants2.default.semesterYears.map(function (year) {
+	                return _react2.default.createElement(
+	                    'div',
+	                    { id: 'semesters-container', key: year },
+	                    _react2.default.createElement(_radioComponent2.default, { clickable: _this3.renderSemester("fall", year), title: '', name: 'semesters' }),
+	                    _react2.default.createElement(_radioComponent2.default, { clickable: _this3.renderSemester("spring", year), title: '', name: 'semesters' })
+	                );
+	            });
+	        }
+	    }, {
+	        key: 'renderSemester',
+	        value: function renderSemester(season, year) {
+	            return _react2.default.createElement(
+	                'div',
+	                { id: 'semester' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { id: 'season', className: season },
+	                    season.toUpperCase()
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { id: 'year', className: season },
+	                    "'" + year
+	                )
+	            );
 	        }
 	    }, {
 	        key: 'render',
@@ -22158,9 +22190,18 @@
 	                    _react2.default.createElement('hr', null),
 	                    _react2.default.createElement(_input2.default, { field: 'Classes Taken:', example: 'AEM 2940', suggestions: _constants2.default.classesTaken }),
 	                    _react2.default.createElement('hr', null),
-	                    _react2.default.createElement(_input2.default, { field: 'Graduating Semester:', example: 'Spring 2019', suggestions: _constants2.default.graduatingSemester }),
+	                    _react2.default.createElement(_input2.default, { field: 'Desired Classes:', example: 'CS 4700', suggestions: _constants2.default.classesDesired }),
 	                    _react2.default.createElement('hr', null),
-	                    _react2.default.createElement(_input2.default, { field: 'Desired Classes:', example: 'CS 4700', suggestions: _constants2.default.classesDesired })
+	                    _react2.default.createElement(
+	                        'div',
+	                        { id: 'radio-container' },
+	                        _react2.default.createElement(
+	                            'p',
+	                            { id: 'form_title' },
+	                            'Graduating Semester:'
+	                        ),
+	                        this.renderSemesters()
+	                    )
 	                )
 	            );
 	        }
@@ -22442,75 +22483,7 @@
 	exports.default = Input;
 
 /***/ },
-/* 184 */
-/*!******************************************!*\
-  !*** ./src/client/views/radio-image.jsx ***!
-  \******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 8);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactDom = __webpack_require__(/*! react-dom */ 182);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var RadioImage = function (_React$Component) {
-	    _inherits(RadioImage, _React$Component);
-	
-	    function RadioImage(props) {
-	        _classCallCheck(this, RadioImage);
-	
-	        var _this = _possibleConstructorReturn(this, (RadioImage.__proto__ || Object.getPrototypeOf(RadioImage)).call(this, props));
-	
-	        _this.selectSchool = _this.selectSchool.bind(_this);
-	        _this.state = { schoolName: _this.props.title };
-	        return _this;
-	    }
-	
-	    _createClass(RadioImage, [{
-	        key: 'selectSchool',
-	        value: function selectSchool() {
-	            this.props.onSelectSchool(this.state.schoolName);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'label',
-	                null,
-	                _react2.default.createElement('input', { type: 'radio', name: this.props.name }),
-	                _react2.default.createElement('img', { src: this.props.img, onClick: this.selectSchool }),
-	                _react2.default.createElement(
-	                    'p',
-	                    null,
-	                    this.props.title
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return RadioImage;
-	}(_react2.default.Component);
-	
-	exports.default = RadioImage;
-
-/***/ },
+/* 184 */,
 /* 185 */,
 /* 186 */
 /*!*************************************!*\
@@ -24811,7 +24784,7 @@
 	"use strict";
 	
 	module.exports = {
-	    schools: [{ title: "Engineering", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png" }, { title: "Arts", img: "http://squad.se/wp-content/uploads/2016/08/Hard-Money-Icon-3.png" }, { title: "Human Ecology", img: "http://www.morethanprinting.co/images/educationIcon.png" }, { title: "Hotel", img: "http://www.hotel-r.net/im/hotel/gb/icon-hotel-18.png" }, { title: "CALS", img: "http://www.cals.nl/wp-content/themes/calscollegelocatie/assets/img/logo.svg" }],
+	    schools: [{ title: "Engineering", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png" }, { title: "Arts", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png" }, { title: "Human Ecology", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png" }, { title: "Hotel", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png" }, { title: "CALS", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png" }, { title: "Architecture", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png" }, { title: "Business", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png" }],
 	    majors: ["Computer Science", "Hotel Things", "Economics", "Accounting", "Applied and Engineering Physics", "Art History", "Basket Weaving"],
 	    minors: ["Computer Science", "Hotel Things", "Economics", "Accounting", "Applied and Engineering Physics", "Art History", "Basket Weaving"],
 	    classesTaken: ["AEM 2540", "CS 4780", "ECE 3210", "MATH 2930"],
@@ -24822,8 +24795,76 @@
 	        UP: 38,
 	        DOWN: 40,
 	        ENTER: 13
-	    }
+	    },
+	    semesterYears: [16, 17, 18, 19]
 	};
+
+/***/ },
+/* 203 */
+/*!**********************************************!*\
+  !*** ./src/client/views/radio-component.jsx ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 8);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(/*! react-dom */ 182);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var RadioComponent = function (_React$Component) {
+	    _inherits(RadioComponent, _React$Component);
+	
+	    function RadioComponent(props) {
+	        _classCallCheck(this, RadioComponent);
+	
+	        var _this = _possibleConstructorReturn(this, (RadioComponent.__proto__ || Object.getPrototypeOf(RadioComponent)).call(this, props));
+	
+	        _this.state = { schoolName: _this.props.title };
+	        return _this;
+	    }
+	
+	    _createClass(RadioComponent, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'label',
+	                null,
+	                _react2.default.createElement('input', { type: 'radio', name: this.props.name }),
+	                _react2.default.createElement(
+	                    'div',
+	                    { id: 'radio-clickable' },
+	                    this.props.clickable
+	                ),
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    this.props.title
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return RadioComponent;
+	}(_react2.default.Component);
+	
+	exports.default = RadioComponent;
 
 /***/ }
 /******/ ]);
