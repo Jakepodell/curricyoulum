@@ -13,7 +13,7 @@ class AppContainer extends React.Component {
 
     static calculateState(prevState) {
         return {
-            state: Store.getState(),
+            school: Store.getState(),
             onSelectSchool: FormActions.selectSchool,
             onSubmit: FormActions.submimtForm,
         };
@@ -24,6 +24,7 @@ class AppContainer extends React.Component {
             <div>
                 <Banner />
                 <Form onSelectSchool = {this.state.onSelectSchool}
+                      school = {this.state.school}
                       onSubmit = {this.state.onSubmit} />
             </div>
         );

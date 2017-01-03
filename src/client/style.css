@@ -57,23 +57,37 @@ label > input{ /* HIDE RADIO */
 }
 label > input + #radio-clickable{ /* IMAGE STYLES */
     cursor:pointer;
-    border: 3px solid transparent;
-}
-label > input:checked + #radio-clickable{ /* (RADIO CHECKED) IMAGE STYLES */
-    border: 3px solid #f00;
 }
 
 #radio-clickable {
     width: 100px;
-    margin: 25px;
+    margin: 20px;
 }
 
 #radio-clickable img {
-    width: 100%;
+    max-width: 100px;
+    max-height: 100px;
 }
 
 #radio-container {
     text-align: center;
+}
+
+.faded {
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    filter: grayscale(100%);
+    opacity: 0.5;
+}
+
+.faded p {
+    color: #4f4f4f;
+}
+
+.selected p {
+    color: #900000;
 }
 
 /*--------------------- INPUTS --------------------------*/
@@ -188,6 +202,8 @@ label > input:checked + #radio-clickable{ /* (RADIO CHECKED) IMAGE STYLES */
     float: right;
     margin-top: 35px;
     overflow-y: scroll;
+    position: relative;
+    z-index: 1;
 }
 
 /*------------------ INPUT SUGGESTIONS ------------------*/
@@ -196,6 +212,8 @@ label > input:checked + #radio-clickable{ /* (RADIO CHECKED) IMAGE STYLES */
     border-style: solid;
     border-width: 0 1px 1px 1px;
     margin-left: 75px;
+    z-index: 5;
+    position: relative;
 }
 
 .external-bubbles #suggestions {
@@ -269,7 +287,12 @@ label > input:checked + #radio-clickable{ /* (RADIO CHECKED) IMAGE STYLES */
     }
 
     #radio-clickable {
-        margin: 17px;
+        margin: 10px;
+    }
+
+    #radio-clickable img {
+        max-width: 90px;
+        max-height: 90px;
     }
 
     #semesters-container #radio-clickable {

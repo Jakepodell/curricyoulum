@@ -22121,16 +22121,31 @@
 	    function Form(props) {
 	        _classCallCheck(this, Form);
 	
-	        return _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).call(this, props));
+	        var _this = _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).call(this, props));
+	
+	        _this.state = { school: "", semester: "" };
+	        return _this;
 	    }
 	
 	    _createClass(Form, [{
+	        key: 'onSelectSchool',
+	        value: function onSelectSchool(school) {
+	            this.setState({ school: school });
+	            this.props.onSelectSchool(school);
+	        }
+	    }, {
+	        key: 'onSelectSemester',
+	        value: function onSelectSemester(semester) {
+	            this.setState({ semester: semester });
+	            console.log(semester);
+	        }
+	    }, {
 	        key: 'renderSchools',
 	        value: function renderSchools() {
 	            var _this2 = this;
 	
 	            return _constants2.default.schools.map(function (school) {
-	                return _react2.default.createElement(_radioComponent2.default, { key: school.title, clickable: _react2.default.createElement('img', { src: school.img, onClick: _this2.props.onSelectSchool.bind(_this2, school.title) }), title: school.title, name: 'schools' });
+	                return _react2.default.createElement(_radioComponent2.default, { key: school.title, clickable: _react2.default.createElement('img', { src: school.img, onClick: _this2.onSelectSchool.bind(_this2, school.title) }), id: school.title, title: school.title, name: 'schools', selected: _this2.state.school });
 	            });
 	        }
 	    }, {
@@ -22142,8 +22157,8 @@
 	                return _react2.default.createElement(
 	                    'div',
 	                    { id: 'semesters-container', key: year },
-	                    _react2.default.createElement(_radioComponent2.default, { clickable: _this3.renderSemester("fall", year), title: '', name: 'semesters' }),
-	                    _react2.default.createElement(_radioComponent2.default, { clickable: _this3.renderSemester("spring", year), title: '', name: 'semesters' })
+	                    _react2.default.createElement(_radioComponent2.default, { clickable: _this3.renderSemester("fall", year), id: year + "fall", title: '', name: 'semesters', selected: _this3.state.semester }),
+	                    _react2.default.createElement(_radioComponent2.default, { clickable: _this3.renderSemester("spring", year), id: year + "spring", title: '', name: 'semesters', selected: _this3.state.semester })
 	                );
 	            });
 	        }
@@ -22152,7 +22167,7 @@
 	        value: function renderSemester(season, year) {
 	            return _react2.default.createElement(
 	                'div',
-	                { id: 'semester' },
+	                { id: 'semester', onClick: this.onSelectSemester.bind(this, year + season) },
 	                _react2.default.createElement(
 	                    'div',
 	                    { id: 'season', className: season },
@@ -22614,6 +22629,7 @@
 	                null,
 	                _react2.default.createElement(_Banner2.default, null),
 	                _react2.default.createElement(_form2.default, { onSelectSchool: this.state.onSelectSchool,
+	                    school: this.state.school,
 	                    onSubmit: this.state.onSubmit })
 	            );
 	        }
@@ -22626,7 +22642,7 @@
 	        key: 'calculateState',
 	        value: function calculateState(prevState) {
 	            return {
-	                state: _FormStore2.default.getState(),
+	                school: _FormStore2.default.getState(),
 	                onSelectSchool: _FormActions2.default.selectSchool,
 	                onSubmit: _FormActions2.default.submimtForm
 	            };
@@ -22820,16 +22836,15 @@
 	    selectSchool: function selectSchool(id) {
 	        _Dispatcher2.default.dispatch({
 	            type: _FormActionTypes2.default.SELECT_SCHOOL,
-	            id: id
+	            school: id
 	        });
-	        _WebApiUtils2.default.submit("engineering", "computer science");
+	        _WebApiUtils2.default.submit(id, "computer science");
 	    },
 	    submitForm: function submitForm(id) {
 	        _Dispatcher2.default.dispatch({
 	            type: _FormActionTypes2.default.SUBMIT_FORM,
 	            id: id
 	        });
-	        _WebApiUtils2.default.submit("engineering", "computer science");
 	    }
 	};
 	
@@ -22842,7 +22857,7 @@
   \******************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -22857,7 +22872,7 @@
 	var WebApiUtils = {
 	
 	    submit: function submit(school, major) {
-	        console.log("dummy for submitting a web api post");
+	        console.log(school);
 	        // request.post(APIEndpoints.REGISTRATION)
 	        //     .send({
 	        //         user: {
@@ -24787,7 +24802,7 @@
 	"use strict";
 	
 	module.exports = {
-	    schools: [{ title: "Engineering", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png" }, { title: "Arts", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png" }, { title: "Human Ecology", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png" }, { title: "Hotel", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png" }, { title: "CALS", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png" }, { title: "Architecture", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png" }, { title: "Business", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png" }],
+	    schools: [{ title: "Engineering", img: "../img/icons/engineering.png" }, { title: "Arts", img: "../img/icons/arts.png" }, { title: "Human Ecology", img: "../img/icons/human_ecology.png" }, { title: "Hotel", img: "../img/icons/hotel.png" }, { title: "CALS", img: "../img/icons/cals.png" }, { title: "Architecture", img: "../img/icons/architecture.png" }, { title: "Business", img: "../img/icons/business.png" }, { title: "ILR", img: "../img/icons/ilr.png" }],
 	    majors: ["Computer Science", "Hotel Things", "Economics", "Accounting", "Applied and Engineering Physics", "Art History", "Basket Weaving"],
 	    minors: ["Computer Science", "Hotel Things", "Economics", "Accounting", "Applied and Engineering Physics", "Art History", "Basket Weaving"],
 	    classesTaken: ["AEM 2540", "CS 4780", "ECE 3210", "MATH 2930"],
@@ -24847,9 +24862,10 @@
 	    _createClass(RadioComponent, [{
 	        key: 'render',
 	        value: function render() {
+	            console.log(this.props);
 	            return _react2.default.createElement(
 	                'label',
-	                null,
+	                { className: this.props.selected !== "" ? this.props.selected === this.props.id ? "selected" : "faded" : "" },
 	                _react2.default.createElement('input', { type: 'radio', name: this.props.name }),
 	                _react2.default.createElement(
 	                    'div',

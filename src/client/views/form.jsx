@@ -10,11 +10,22 @@ import Constants from '../constants/constants.jsx';
 class Form extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {school: "", semester: ""}
     }
+
+    onSelectSchool(school) {
+        this.setState({school: school})
+        this.props.onSelectSchool(school);
+    }
+
+    onSelectSemester(semester) {
+        this.setState({semester: semester});
+        console.log(semester);
+    };
 
     renderSchools() {
         return Constants.schools.map((school) => {
-            return <RadioImage key = {school.title} clickable = {<img src={school.img} onClick={this.props.onSelectSchool.bind(this, school.title)}/>} title = {school.title} name = "schools" />
+            return <RadioImage key = {school.title} clickable = {<img src={school.img} onClick={this.onSelectSchool.bind(this, school.title)}/>} id = {school.title} title = {school.title} name = "schools" selected = {this.state.school} />
         });
     }
 
@@ -22,8 +33,8 @@ class Form extends React.Component {
         return Constants.semesterYears.map((year) => {
             return (
               <div id = "semesters-container" key = {year}>
-                  <RadioImage clickable = {this.renderSemester("fall", year)} title = "" name = "semesters" />
-                  <RadioImage clickable = {this.renderSemester("spring", year)} title = "" name = "semesters" />
+                  <RadioImage clickable = {this.renderSemester("fall", year)}  id = {year + "fall"} title = "" name = "semesters" selected = {this.state.semester} />
+                  <RadioImage clickable = {this.renderSemester("spring", year)} id = {year + "spring"} title = "" name = "semesters" selected = {this.state.semester} />
               </div>
             );
         });
@@ -31,7 +42,7 @@ class Form extends React.Component {
 
     renderSemester(season, year) {
         return(
-          <div id = "semester">
+          <div id = "semester" onClick = {this.onSelectSemester.bind(this, year + season)}>
               <div id = "season" className = {season}>
                   {season.toUpperCase()}
               </div>

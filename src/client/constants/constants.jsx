@@ -1,12 +1,13 @@
 module.exports = {
     schools: [
-        {title: "Engineering", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png"},
-        {title: "Arts", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png"},
-        {title: "Human Ecology", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png"},
-        {title: "Hotel", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png"},
-        {title: "CALS", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png"},
-        {title: "Architecture", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png"},
-        {title: "Business", img: "http://www.kiawahisland.org/Data/Sites/1/media/biweekly-email-/007-512.png"},
+        {title: "Engineering", img: "../img/icons/engineering.png"},
+        {title: "Arts", img: "../img/icons/arts.png"},
+        {title: "Human Ecology", img: "../img/icons/human_ecology.png"},
+        {title: "Hotel", img: "../img/icons/hotel.png"},
+        {title: "CALS", img: "../img/icons/cals.png"},
+        {title: "Architecture", img: "../img/icons/architecture.png"},
+        {title: "Business", img: "../img/icons/business.png"},
+        {title: "ILR", img: "../img/icons/ilr.png"},
     ],
     majors: [
         "Computer Science",

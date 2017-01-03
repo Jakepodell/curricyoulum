@@ -10,10 +10,11 @@ class RadioComponent extends React.Component {
 
 
     render() {
+        console.log(this.props);
         return (
-            <label>
+            <label className = {this.props.selected !== "" ? (this.props.selected === this.props.id ? "selected" : "faded") : ""}>
                 <input type = "radio" name = {this.props.name} />
-                <div id = "radio-clickable">
+                <div id = "radio-clickable" >
                     {this.props.clickable}
                 </div>
                 <p>{this.props.title}</p>

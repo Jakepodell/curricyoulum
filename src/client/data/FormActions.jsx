@@ -6,9 +6,9 @@ const FormActions = {
     selectSchool(id) {
         Dispatcher.dispatch({
             type: FormActionTypes.SELECT_SCHOOL,
-            id,
+            school: id,
         });
-        WebApiUtils.submit("engineering", "computer science");
+        WebApiUtils.submit(id, "computer science");
     },
 
     submitForm(id) {
@@ -16,7 +16,6 @@ const FormActions = {
             type: FormActionTypes.SUBMIT_FORM,
             id,
         });
-        WebApiUtils.submit("engineering", "computer science");
     },
 };
 
