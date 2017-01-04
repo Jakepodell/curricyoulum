@@ -3,7 +3,6 @@ import request from 'superagent';
 const WebApiUtils = {
 
     submit: function (school, major) {
-        console.log(school);
         // request.post(APIEndpoints.REGISTRATION)
         //     .send({
         //         user: {

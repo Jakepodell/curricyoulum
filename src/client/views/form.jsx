@@ -10,7 +10,7 @@ import Constants from '../constants/constants.jsx';
 class Form extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {school: "", semester: ""}
+        this.state = {school: "", year: ""}
     }
 
     onSelectSchool(school) {
@@ -19,9 +19,12 @@ class Form extends React.Component {
     }
 
     onSelectSemester(semester) {
-        this.setState({semester: semester});
-        console.log(semester);
+        this.setState({year: semester});
     };
+
+    onSelectSeason(season) {
+        this.props.onSelectSeason(season)
+    }
 
     renderSchools() {
         return Constants.schools.map((school) => {
@@ -33,16 +36,16 @@ class Form extends React.Component {
         return Constants.semesterYears.map((year) => {
             return (
               <div id = "semesters-container" key = {year}>
-                  <RadioImage clickable = {this.renderSemester("fall", year)}  id = {year + "fall"} title = "" name = "semesters" selected = {this.state.semester} />
-                  <RadioImage clickable = {this.renderSemester("spring", year)} id = {year + "spring"} title = "" name = "semesters" selected = {this.state.semester} />
+                  <RadioImage clickable = {this.renderSemester(this.props.season, year)}  id = {year} title = "" name = "semesters" selected = {this.state.year} />
               </div>
             );
         });
     }
 
     renderSemester(season, year) {
+        console.log(season);
         return(
-          <div id = "semester" onClick = {this.onSelectSemester.bind(this, year + season)}>
+          <div id = "semester" onClick = {this.onSelectSemester.bind(this, year)}>
               <div id = "season" className = {season}>
                   {season.toUpperCase()}
               </div>
@@ -71,6 +74,8 @@ class Form extends React.Component {
                     <hr/>
                     <div id = "radio-container">
                         <p id = "form_title">Graduating Semester:</p>
+                        <RadioImage key = "spring" clickable = {<img src = "../img/icons/spring.png" onClick={this.onSelectSeason.bind(this, "spring")}/>} id = "spring" title = "spring" name = "seasons" selected = {this.props.season} />
+                        <RadioImage key = "fall" clickable = {<img src = "../img/icons/fall.png" onClick={this.onSelectSeason.bind(this, "fall")}/>} id = "fall" title = "fall" name = "seasons" selected = {this.props.season} />
                         {this.renderSemesters()}
                     </div>
                 </div>

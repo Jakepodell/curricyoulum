@@ -11,6 +11,13 @@ const FormActions = {
         WebApiUtils.submit(id, "computer science");
     },
 
+    selectSeason(season) {
+        Dispatcher.dispatch({
+            type: FormActionTypes.SELECT_SEASON,
+            season: season,
+        });
+    },
+
     submitForm(id) {
         Dispatcher.dispatch({
             type: FormActionTypes.SUBMIT_FORM,

@@ -13,8 +13,10 @@ class AppContainer extends React.Component {
 
     static calculateState(prevState) {
         return {
-            school: Store.getState(),
+            school: Store.getState().school,
+            season: Store.getState().season,
             onSelectSchool: FormActions.selectSchool,
+            onSelectSeason: FormActions.selectSeason,
             onSubmit: FormActions.submimtForm,
         };
     }
@@ -23,8 +25,11 @@ class AppContainer extends React.Component {
         return (
             <div>
                 <Banner />
+                {console.log(this.state)}
                 <Form onSelectSchool = {this.state.onSelectSchool}
+                      onSelectSeason = {this.state.onSelectSeason}
                       school = {this.state.school}
+                      season = {this.state.season}
                       onSubmit = {this.state.onSubmit} />
             </div>
         );

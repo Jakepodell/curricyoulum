@@ -22123,7 +22123,7 @@
 	
 	        var _this = _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).call(this, props));
 	
-	        _this.state = { school: "", semester: "" };
+	        _this.state = { school: "", year: "" };
 	        return _this;
 	    }
 	
@@ -22136,8 +22136,12 @@
 	    }, {
 	        key: 'onSelectSemester',
 	        value: function onSelectSemester(semester) {
-	            this.setState({ semester: semester });
-	            console.log(semester);
+	            this.setState({ year: semester });
+	        }
+	    }, {
+	        key: 'onSelectSeason',
+	        value: function onSelectSeason(season) {
+	            this.props.onSelectSeason(season);
 	        }
 	    }, {
 	        key: 'renderSchools',
@@ -22157,17 +22161,17 @@
 	                return _react2.default.createElement(
 	                    'div',
 	                    { id: 'semesters-container', key: year },
-	                    _react2.default.createElement(_radioComponent2.default, { clickable: _this3.renderSemester("fall", year), id: year + "fall", title: '', name: 'semesters', selected: _this3.state.semester }),
-	                    _react2.default.createElement(_radioComponent2.default, { clickable: _this3.renderSemester("spring", year), id: year + "spring", title: '', name: 'semesters', selected: _this3.state.semester })
+	                    _react2.default.createElement(_radioComponent2.default, { clickable: _this3.renderSemester(_this3.props.season, year), id: year, title: '', name: 'semesters', selected: _this3.state.year })
 	                );
 	            });
 	        }
 	    }, {
 	        key: 'renderSemester',
 	        value: function renderSemester(season, year) {
+	            console.log(season);
 	            return _react2.default.createElement(
 	                'div',
-	                { id: 'semester', onClick: this.onSelectSemester.bind(this, year + season) },
+	                { id: 'semester', onClick: this.onSelectSemester.bind(this, year) },
 	                _react2.default.createElement(
 	                    'div',
 	                    { id: 'season', className: season },
@@ -22215,6 +22219,8 @@
 	                            { id: 'form_title' },
 	                            'Graduating Semester:'
 	                        ),
+	                        _react2.default.createElement(_radioComponent2.default, { key: 'spring', clickable: _react2.default.createElement('img', { src: '../img/icons/spring.png', onClick: this.onSelectSeason.bind(this, "spring") }), id: 'spring', title: 'spring', name: 'seasons', selected: this.props.season }),
+	                        _react2.default.createElement(_radioComponent2.default, { key: 'fall', clickable: _react2.default.createElement('img', { src: '../img/icons/fall.png', onClick: this.onSelectSeason.bind(this, "fall") }), id: 'fall', title: 'fall', name: 'seasons', selected: this.props.season }),
 	                        this.renderSemesters()
 	                    )
 	                ),
@@ -22628,8 +22634,11 @@
 	                'div',
 	                null,
 	                _react2.default.createElement(_Banner2.default, null),
+	                console.log(this.state),
 	                _react2.default.createElement(_form2.default, { onSelectSchool: this.state.onSelectSchool,
+	                    onSelectSeason: this.state.onSelectSeason,
 	                    school: this.state.school,
+	                    season: this.state.season,
 	                    onSubmit: this.state.onSubmit })
 	            );
 	        }
@@ -22642,8 +22651,10 @@
 	        key: 'calculateState',
 	        value: function calculateState(prevState) {
 	            return {
-	                school: _FormStore2.default.getState(),
+	                school: _FormStore2.default.getState().school,
+	                season: _FormStore2.default.getState().season,
 	                onSelectSchool: _FormActions2.default.selectSchool,
+	                onSelectSeason: _FormActions2.default.selectSeason,
 	                onSubmit: _FormActions2.default.submimtForm
 	            };
 	        }
@@ -22763,7 +22774,8 @@
 	        key: 'getInitialState',
 	        value: function getInitialState() {
 	            return {
-	                school: ""
+	                school: "",
+	                season: "spring"
 	            };
 	        }
 	    }, {
@@ -22771,10 +22783,11 @@
 	        value: function reduce(state, action) {
 	            switch (action.type) {
 	                case _FormActionTypes2.default.SELECT_SCHOOL:
-	                    state.school = action.school;
-	                    return state;
+	                    return { school: action.school, season: state.season };
 	                case _FormActionTypes2.default.SUBMIT_FORM:
 	                    return state;
+	                case _FormActionTypes2.default.SELECT_SEASON:
+	                    return { school: state.school, season: action.season };
 	                default:
 	                    return state;
 	            }
@@ -22800,7 +22813,8 @@
 	});
 	var FormActionTypes = {
 	    SUBMIT_FORM: 'SUBMIT_FORM',
-	    SELECT_SCHOOL: 'SELECT_SCHOOL'
+	    SELECT_SCHOOL: 'SELECT_SCHOOL',
+	    SELECT_SEASON: 'SEASON'
 	};
 	
 	exports.default = FormActionTypes;
@@ -22840,6 +22854,12 @@
 	        });
 	        _WebApiUtils2.default.submit(id, "computer science");
 	    },
+	    selectSeason: function selectSeason(season) {
+	        _Dispatcher2.default.dispatch({
+	            type: _FormActionTypes2.default.SELECT_SEASON,
+	            season: season
+	        });
+	    },
 	    submitForm: function submitForm(id) {
 	        _Dispatcher2.default.dispatch({
 	            type: _FormActionTypes2.default.SUBMIT_FORM,
@@ -22872,7 +22892,6 @@
 	var WebApiUtils = {
 	
 	    submit: function submit(school, major) {
-	        console.log(school);
 	        // request.post(APIEndpoints.REGISTRATION)
 	        //     .send({
 	        //         user: {
@@ -24862,7 +24881,6 @@
 	    _createClass(RadioComponent, [{
 	        key: 'render',
 	        value: function render() {
-	            console.log(this.props);
 	            return _react2.default.createElement(
 	                'label',
 	                { className: this.props.selected !== "" ? this.props.selected === this.props.id ? "selected" : "faded" : "" },

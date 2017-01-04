@@ -10,7 +10,6 @@ class RadioComponent extends React.Component {
 
 
     render() {
-        console.log(this.props);
         return (
             <label className = {this.props.selected !== "" ? (this.props.selected === this.props.id ? "selected" : "faded") : ""}>
                 <input type = "radio" name = {this.props.name} />

@@ -138,7 +138,7 @@ label > input + #radio-clickable{ /* IMAGE STYLES */
     border-style: solid;
     border-width: 1px;
     display: inline-block;
-    border-color: #888;
+    border-color: #900;
     width: 325px;
     height: 35px;
 }
@@ -165,6 +165,10 @@ label > input + #radio-clickable{ /* IMAGE STYLES */
     overflow: hidden;
 }
 
+#input-label {
+    font-weight: 700;
+}
+
 /*---------------------- BUBBLES ------------------------*/
 
 #bubble {
@@ -172,6 +176,7 @@ label > input + #radio-clickable{ /* IMAGE STYLES */
     border-style: solid;
     border-width: 1px;
     border-radius: 8px;
+    border-color: #900000;
     padding: 2px 6px;
     margin: 5px 3px;
     font-size: 12px;
@@ -198,7 +203,7 @@ label > input + #radio-clickable{ /* IMAGE STYLES */
     height: 100px;
     border-style: solid;
     border-width: 1px;
-    border-color: #888;
+    border-color: #900;
     float: right;
     margin-top: 35px;
     overflow-y: scroll;
@@ -211,6 +216,7 @@ label > input + #radio-clickable{ /* IMAGE STYLES */
     width: 300px;
     border-style: solid;
     border-width: 0 1px 1px 1px;
+    border-color: #900000;
     margin-left: 75px;
     z-index: 5;
     position: relative;
@@ -223,10 +229,11 @@ label > input + #radio-clickable{ /* IMAGE STYLES */
 #suggestions #suggestion {
     border-style: solid;
     border-width: 1px 0 0 0;
+    border-color: #900000;
 }
 
 #suggestions #suggestion.focused {
-    background-color: #565656;
+    background-color: #900;
     color: #fff;
 }
 
@@ -247,21 +254,21 @@ label > input + #radio-clickable{ /* IMAGE STYLES */
     color: #fff;
 }
 
-#semesters-container #season.fall {
+#semesters-container #season {
     background-color: #790000;
 }
 
-#semesters-container #year.fall {
+#semesters-container #year {
     background-color: #9e0b0f;
 }
 
-#semesters-container #season.spring {
-    background-color: #f26c4f;
-}
+/*#semesters-container #season.spring {*/
+    /*background-color: #f26c4f;*/
+/*}*/
 
-#semesters-container #year.spring {
-    background-color: #f69679;
-}
+/*#semesters-container #year.spring {*/
+    /*background-color: #f69679;*/
+/*}*/
 
 #year {
     font-size: 50px;
