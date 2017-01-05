@@ -22158,17 +22158,12 @@
 	            var _this3 = this;
 	
 	            return _constants2.default.semesterYears.map(function (year) {
-	                return _react2.default.createElement(
-	                    'div',
-	                    { id: 'semesters-container', key: year },
-	                    _react2.default.createElement(_radioComponent2.default, { clickable: _this3.renderSemester(_this3.props.season, year), id: year, title: '', name: 'semesters', selected: _this3.state.year })
-	                );
+	                return _react2.default.createElement(_radioComponent2.default, { clickable: _this3.renderSemester(_this3.props.season, year), id: year, title: '', name: 'semesters', selected: _this3.state.year });
 	            });
 	        }
 	    }, {
 	        key: 'renderSemester',
 	        value: function renderSemester(season, year) {
-	            console.log(season);
 	            return _react2.default.createElement(
 	                'div',
 	                { id: 'semester', onClick: this.onSelectSemester.bind(this, year) },
@@ -22211,6 +22206,8 @@
 	                    _react2.default.createElement('hr', null),
 	                    _react2.default.createElement(_input2.default, { field: 'Desired Classes:', example: 'CS 4700', suggestions: _constants2.default.classesDesired }),
 	                    _react2.default.createElement('hr', null),
+	                    _react2.default.createElement(_input2.default, { field: 'Required Classes:', example: 'CS 4700', suggestions: _constants2.default.classesDesired }),
+	                    _react2.default.createElement('hr', null),
 	                    _react2.default.createElement(
 	                        'div',
 	                        { id: 'radio-container' },
@@ -22219,9 +22216,13 @@
 	                            { id: 'form_title' },
 	                            'Graduating Semester:'
 	                        ),
-	                        _react2.default.createElement(_radioComponent2.default, { key: 'spring', clickable: _react2.default.createElement('img', { src: '../img/icons/spring.png', onClick: this.onSelectSeason.bind(this, "spring") }), id: 'spring', title: 'spring', name: 'seasons', selected: this.props.season }),
-	                        _react2.default.createElement(_radioComponent2.default, { key: 'fall', clickable: _react2.default.createElement('img', { src: '../img/icons/fall.png', onClick: this.onSelectSeason.bind(this, "fall") }), id: 'fall', title: 'fall', name: 'seasons', selected: this.props.season }),
-	                        this.renderSemesters()
+	                        _react2.default.createElement(
+	                            'div',
+	                            { id: 'semester-chooser' },
+	                            _react2.default.createElement(_radioComponent2.default, { key: 'spring', clickable: _react2.default.createElement('img', { src: '../img/icons/spring.png', onClick: this.onSelectSeason.bind(this, "spring") }), id: 'spring', title: 'spring', name: 'seasons', selected: this.props.season }),
+	                            _react2.default.createElement(_radioComponent2.default, { key: 'fall', clickable: _react2.default.createElement('img', { src: '../img/icons/fall.png', onClick: this.onSelectSeason.bind(this, "fall") }), id: 'fall', title: 'fall', name: 'seasons', selected: this.props.season }),
+	                            this.renderSemesters()
+	                        )
 	                    )
 	                ),
 	                _react2.default.createElement('input', { id: 'submit', type: 'submit', value: 'Submit' })
@@ -22634,7 +22635,6 @@
 	                'div',
 	                null,
 	                _react2.default.createElement(_Banner2.default, null),
-	                console.log(this.state),
 	                _react2.default.createElement(_form2.default, { onSelectSchool: this.state.onSelectSchool,
 	                    onSelectSeason: this.state.onSelectSeason,
 	                    school: this.state.school,

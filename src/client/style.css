@@ -59,6 +59,10 @@ label > input + #radio-clickable{ /* IMAGE STYLES */
     cursor:pointer;
 }
 
+#radio-container label {
+    overflow: hidden;
+}
+
 #radio-clickable {
     width: 100px;
     margin: 20px;
@@ -248,20 +252,10 @@ label > input + #radio-clickable{ /* IMAGE STYLES */
 
 /*---------------- SEMESTERS ---------------------------------*/
 
-#semesters-container {
+#semester {
     display: inline-block;
-    margin: 15px;
     color: #fff;
 }
-
-#semesters-container #season {
-    background-color: #790000;
-}
-
-#semesters-container #year {
-    background-color: #9e0b0f;
-}
-
 /*#semesters-container #season.spring {*/
     /*background-color: #f26c4f;*/
 /*}*/
@@ -270,19 +264,22 @@ label > input + #radio-clickable{ /* IMAGE STYLES */
     /*background-color: #f69679;*/
 /*}*/
 
-#year {
+#semester #year {
     font-size: 50px;
-    padding: 7px 5px 7px 0;
+    padding: 7px 15px 7px 7px;
     font-family: Avenir;
+    background-color: #9e0b0f;
+
 }
 
-#season {
+#semester #season {
     font-family: Avenir;
     font-weight: lighter;
     padding: 3px;
+    background-color: #790000;
 }
 
-#semesters-container #radio-clickable {
+#semesters #radio-clickable {
     margin: 10px;
 }
 

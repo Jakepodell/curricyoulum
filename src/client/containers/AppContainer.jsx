@@ -25,7 +25,6 @@ class AppContainer extends React.Component {
         return (
             <div>
                 <Banner />
-                {console.log(this.state)}
                 <Form onSelectSchool = {this.state.onSelectSchool}
                       onSelectSeason = {this.state.onSelectSeason}
                       school = {this.state.school}
